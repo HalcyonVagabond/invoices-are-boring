@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Invoices Are Boring",
+  "name": "Simple invoice generator to save you time and life energy.",
   "icons": [
     {
       "src": "favicon.ico",

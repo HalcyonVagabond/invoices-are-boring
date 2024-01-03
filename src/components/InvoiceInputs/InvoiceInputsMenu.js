@@ -51,7 +51,7 @@ const InvoiceInputsMenu = () => {
                     aria-controls="line-item-form-content"
                     id="line-item-form-header"
                 >
-                    <Typography>Line Items</Typography>
+                    <Typography>Invoice Items</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <LineItemForm />

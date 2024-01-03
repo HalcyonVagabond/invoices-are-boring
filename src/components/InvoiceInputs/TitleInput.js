@@ -13,7 +13,7 @@ const InvoiceTitleInput = () => {
     };
 
     return (
-        <div className="shadow-lg p-6 rounded-lg bg-white mt-5 w-full overflow-auto max-w-[300px]">
+        <div className="shadow-lg p-6 rounded-lg bg-white mt-5 w-full max-w-[300px] h-[180px]">
             <h3 className="text-lg font-semibold mb-4">Invoice Title</h3>
             <input
                 type="text"

@@ -1,16 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
+// Material UI
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
-import LineItemForm from './LineItemForm';
-import InvoiceTitleInput from './InvoiceTitleInput';
+import MenuIcon from '@mui/icons-material/Menu';
+// Components
+import LineItemForm from './LineItemInput';
+import InvoiceTitleInput from './TitleInput';
 import HeaderInput from './HeadersInput';
 
 const InvoiceInputsMenu = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
-        <div className="max-w-[350px] space-y-8 h-full">
+        <div className='relative'>
+        <button className={`md:hidden mb-4 border border-gray-200 w-full rounded-md py-2 text-center flex items-center justify-center ${isMenuOpen ? 'bg-blue-300' : ''}`} onClick={toggleMenu}>
+            <h4 className='mr-1'>{isMenuOpen ? 'Close Menu' : 'Menu '}</h4><MenuIcon className="h-6 w-6" />
+        </button>
+
+        <div className={`w-full md:max-w-[350px] border border-y md:border-none shadow-xl md:shadow-none space-y-4 py-4 px-4 overflow-auto fixed bg-gray-200 md:bg-white md:p-1 flex flex-col items-center justify-center z-[1000] ${isMenuOpen ? 'block' : 'hidden'} md:block md:relative`}>
             <InvoiceTitleInput />
 
             {/* Header Sections Accordion */}
@@ -43,6 +57,7 @@ const InvoiceInputsMenu = () => {
 
 
             {/* Add more input forms or accordions here */}
+        </div>
         </div>
     );
 };

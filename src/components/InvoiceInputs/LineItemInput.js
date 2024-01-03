@@ -44,7 +44,7 @@ function InvoiceItemEntry() {
     };
 
     return (
-        <div className="shadow-lg p-6 rounded-lg bg-white mt-5 w-full overflow-auto max-w-[300px] h-full">
+        <div className="shadow-lg p-6 rounded-lg bg-white mt-5 w-full overflow-auto h-full">
             <h3 className="text-lg font-semibold mb-4">Add Invoice Item</h3>
             <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
                 <input

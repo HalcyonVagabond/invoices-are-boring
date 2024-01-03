@@ -25,7 +25,7 @@ const HeaderInput = () => {
     };
 
     return (
-        <div className="shadow-lg p-6 rounded-lg bg-white mt-5 w-full overflow-auto max-w-[300px] h-full">
+        <div className="shadow-lg p-6 rounded-lg bg-white mt-5 w-full overflow-auto h-full">
             {/* New section form */}
 
             <h3 className="text-lg font-semibold mb-4">Add Header Section</h3>

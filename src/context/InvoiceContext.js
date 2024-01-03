@@ -48,6 +48,12 @@ export const InvoiceProvider = ({ children }) => {
     setInvoiceItems([...invoiceItems, item]);
   };
 
+  const updateInvoiceItem = (index, newItemContent) => {
+    const updatedItems = [...invoiceItems];
+    updatedItems[index] = newItemContent;
+    setInvoiceItems(updatedItems);
+};
+
   const removeInvoiceItem = (index) => {
     const newItems = invoiceItems.filter((_, itemIndex) => itemIndex !== index);
     setInvoiceItems(newItems);
@@ -72,6 +78,7 @@ export const InvoiceProvider = ({ children }) => {
     <InvoiceContext.Provider value={{
       invoiceItems,
       addInvoiceItem,
+      updateInvoiceItem,
       removeInvoiceItem,
       invoiceTitle,
       setInvoiceTitle,

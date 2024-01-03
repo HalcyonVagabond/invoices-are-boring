@@ -1,11 +1,21 @@
 import React, { useState, useContext } from 'react';
 import InvoiceContext from '../../context/InvoiceContext';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 
 function InvoiceItemEntry() {
-    const { addInvoiceItem } = useContext(InvoiceContext);
+    const { addInvoiceItem, invoiceItems, updateInvoiceItem, removeInvoiceItem } = useContext(InvoiceContext);
+    const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [rate, setRate] = useState('');
     const [hours, setHours] = useState('');
+
+    const handleTitleChange = (event) => {
+        setTitle(event.target.value);
+    };
 
     const handleDescriptionChange = (event) => {
         setDescription(event.target.value);
@@ -21,10 +31,16 @@ function InvoiceItemEntry() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addInvoiceItem({ description, rate, hours });
+        addInvoiceItem({ title, description, rate, hours });
+        setTitle('');
         setDescription('');
         setRate('');
         setHours('');
+    };
+
+    const handleUpdateItem = (index, key, value) => {
+        const updatedItem = { ...invoiceItems[index], [key]: value };
+        updateInvoiceItem(index, updatedItem);
     };
 
     return (
@@ -33,9 +49,17 @@ function InvoiceItemEntry() {
             <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
                 <input
                     type="text"
+                    value={title}
+                    onChange={handleTitleChange}
+                    placeholder="Title"
+                    className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                />
+                <textarea
+                    type="text"
                     value={description}
                     onChange={handleDescriptionChange}
                     placeholder="Description"
+                    rows="3"
                     className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
                 />
                 <input
@@ -61,6 +85,53 @@ function InvoiceItemEntry() {
                     </svg>
                 </button>
             </form>
+            {invoiceItems.map((item, index) => (
+                <Accordion key={index}>
+                    <AccordionSummary
+                        className='bg-blue-200'
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls={`panel${index}a-content`}
+                        id={`panel${index}a-header`}
+                    >
+                        <div>Edit: {item.title}</div>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <div className="flex flex-col space-y-4">
+                        <input
+                    type="text"
+                    value={item.title}
+                    onChange={(e) => handleUpdateItem(index, 'title', e.target.value)}
+                    placeholder="Title"
+                    className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                />
+                <textarea
+                    type="text"
+                    value={item.description}
+                    onChange={(e) => handleUpdateItem(index, 'description', e.target.value)}
+                    placeholder="Description"
+                    rows="3"
+                    className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                />
+                <input
+                    type="number"
+                    value={item.rate}
+                    onChange={(e) => handleUpdateItem(index, 'rate', e.target.value)}
+                    placeholder="Rate per Hour"
+                    className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                />
+                <input
+                    type="number"
+                    value={item.hours}
+                    onChange={(e) => handleUpdateItem(index, 'hours', e.target.value)}
+                    placeholder="Hours"
+                    className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                />
+                            
+                            <button className='hover:bg-red-600 border border-red-600 hover:text-white cursor-pointer py-2 rounded-md w-[80px] mx-auto' onClick={()=>window.confirm('Are you sure you want to delete this header section?', removeInvoiceItem(index))}>Remove</button>
+                        </div>
+                    </AccordionDetails>
+                </Accordion>
+            ))}
         </div>
     );
 }

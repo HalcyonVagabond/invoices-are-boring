@@ -21,12 +21,12 @@ const InvoiceInputsMenu = () => {
     return (
         <div className='relative'>
         <button className={`md:hidden mb-4 border border-gray-200 w-full rounded-md py-2 text-center flex items-center justify-center ${isMenuOpen ? 'bg-blue-300' : ''}`} onClick={toggleMenu}>
-            <h4 className='mr-1'>{isMenuOpen ? 'Close Menu' : 'Menu '}</h4><MenuIcon className="h-6 w-6" />
+            <h4 className='mr-1'>{isMenuOpen ? 'Close Menu' : 'Inputs Menu'}</h4><MenuIcon className="h-6 w-6" />
         </button>
 
         <div className={`w-full md:max-w-[350px] h-[70vh] md:h-full overflow-y-auto border border-y md:border-none shadow-xl md:shadow-none space-y-4 py-4 px-4 overflow-auto fixed top-0 bg-gray-200 md:bg-white md:p-1 flex flex-col items-center justify-start z-[1000] ${isMenuOpen ? 'block' : 'hidden'} md:block md:relative`}>
             <button className={`md:hidden mb-4 border border-gray-200 w-full rounded-md py-2 text-center flex items-center justify-center ${isMenuOpen ? 'bg-blue-300' : ''}`} onClick={toggleMenu}>
-                <h4 className='mr-1'>{isMenuOpen ? 'Close Menu' : 'Menu '}</h4><MenuIcon className="h-6 w-6" />
+                <h4 className='mr-1'>{isMenuOpen ? 'Close Menu' : 'Inputs Menu '}</h4><MenuIcon className="h-6 w-6" />
             </button>
             <InvoiceTitleInput />
 

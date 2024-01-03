@@ -92,11 +92,11 @@ const HeaderInput = () => {
                             />
                            
                             <div className="flex justify-between mt-3">
-                                <button onClick={() => handleUpdateSection(index, 'alignment', 'left')} className={`px-3 py-1 rounded-sm ${section.alignment === 'left' ? 'bg-blue-500 text-white' : ''}`}>Left</button>
-                                <button onClick={() => handleUpdateSection(index, 'alignment', 'center')} className={`px-3 py-1 rounded-sm ${section.alignment === 'center' ? 'bg-blue-500 text-white' : ''}`} >Center</button>
-                                <button onClick={() => handleUpdateSection(index, 'alignment', 'right')} className={`px-3 py-1 rounded-sm ${section.alignment === 'right' ? 'bg-blue-500 text-white' : ''}`}>Right</button>
+                                <button onClick={() => handleUpdateSection(index, 'alignment', 'left')} className={`px-3 py-1 rounded-md ${section.alignment === 'left' ? 'bg-blue-500 text-white' : 'hover:bg-blue-200 transition-colors duration-500'}`}>Left</button>
+                                <button onClick={() => handleUpdateSection(index, 'alignment', 'center')} className={`px-3 py-1 rounded-md ${section.alignment === 'center' ? 'bg-blue-500 text-white' : 'hover:bg-blue-200 transition-colors duration-500'}`} >Center</button>
+                                <button onClick={() => handleUpdateSection(index, 'alignment', 'right')} className={`px-3 py-1 rounded-md ${section.alignment === 'right' ? 'bg-blue-500 text-white' : 'hover:bg-blue-200 transition-colors duration-500'}`}>Right</button>
                             </div>
-                            <button className='hover:bg-red-600 hover:text-white cursor-pointer py-2 rounded-sm' onClick={()=>window.confirm('Are you sure you want to delete this header section?', removeHeaderSection(index))}>Remove</button>
+                            <button className='border border-red-600 hover:bg-red-600 hover:text-white transition-colors duration-200 w-[80px] mx-auto cursor-pointer py-2 rounded-md' onClick={()=>window.confirm('Are you sure you want to delete this header section?', removeHeaderSection(index))}>Remove</button>
                         </div>
                     </AccordionDetails>
                 </Accordion>

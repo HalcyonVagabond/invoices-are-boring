@@ -58,7 +58,7 @@ const Invoice = () => {
 
     return (
         <div>
-            <button onClick={exportPDF} className='bg-blue-200 hover:bg-blue-500 px-5 py-2 hover:text-white rounded-md mb-4 font-bold'>Export to PDF</button> {/* This button will trigger PDF export */}
+            <button onClick={exportPDF} className='bg-blue-200 hover:bg-blue-500 px-5 py-2 hover:text-white rounded-md mb-4 font-bold transition-colors duration-500'>Export to PDF</button>
             <div ref={invoiceRef} className="absolute left-0 md:relative bg-white shadow-lg border rounded-sm overflow-hidden px-5 py-7 bg-white w-[100vw] md:max-w-[8in] min-h-[11in]">
                 
                 <div className={`title-section text-${titleAlignment}`}>

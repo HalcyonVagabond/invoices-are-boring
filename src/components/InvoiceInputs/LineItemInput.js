@@ -127,7 +127,7 @@ function InvoiceItemEntry() {
                     className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
                 />
                             
-                            <button className='hover:bg-red-600 border border-red-600 hover:text-white cursor-pointer py-2 rounded-md w-[80px] mx-auto' onClick={()=>window.confirm('Are you sure you want to delete this header section?', removeInvoiceItem(index))}>Remove</button>
+                            <button className='hover:bg-red-600 border border-red-600 hover:text-white cursor-pointer py-2 rounded-md w-[80px] mx-auto transition-colors duration-200' onClick={()=>window.confirm('Are you sure you want to delete this header section?', removeInvoiceItem(index))}>Remove</button>
                         </div>
                     </AccordionDetails>
                 </Accordion>

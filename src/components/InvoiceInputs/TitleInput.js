@@ -22,10 +22,10 @@ const InvoiceTitleInput = () => {
                 placeholder="Invoice Title"
                 className={`px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300`}
             />
-            <div className="flex justify-between mt-3">
-                <button onClick={() => handleAlignment('left')} className={`px-3 py-1 rounded-sm ${titleAlignment === 'left' ? 'bg-blue-500 text-white' : ''}`}>Left</button>
-                <button onClick={() => handleAlignment('center')} className={`px-3 py-1 rounded-sm ${titleAlignment === 'center' ? 'bg-blue-500 text-white' : ''}`} >Center</button>
-                <button onClick={() => handleAlignment('right')} className={`px-3 py-1 rounded-sm ${titleAlignment === 'right' ? 'bg-blue-500 text-white' : ''}`}>Right</button>
+            <div className="flex justify-between mt-3 px-3">
+                <button onClick={() => handleAlignment('left')} className={`px-3 py-1 rounded-md ${titleAlignment === 'left' ? 'bg-blue-500 text-white' : 'hover:bg-blue-200 transition-colors duration-500'}`}>Left</button>
+                <button onClick={() => handleAlignment('center')} className={`px-3 py-1 rounded-md ${titleAlignment === 'center' ? 'bg-blue-500 text-white' : 'hover:bg-blue-200 transition-colors duration-500'}`} >Center</button>
+                <button onClick={() => handleAlignment('right')} className={`px-3 py-1 rounded-md ${titleAlignment === 'right' ? 'bg-blue-500 text-white' : 'hover:bg-blue-200 transition-colors duration-500'}`}>Right</button>
             </div>
         </div>
     );

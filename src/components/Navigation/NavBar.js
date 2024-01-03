@@ -11,7 +11,7 @@ const NavBar = () => {
             </div>
             <div className="mr-4">
                 {/* Link that opens in a new tab */}
-                <a className='border border-black rounded-md py-3 px-4 bg-white cursor-pointer hover:bg-blue-100' href="https://www.buymeacoffee.com/feelfactory" target="_blank" rel="noopener noreferrer">Donate ❤️</a>
+                <a className='shadow-lg font-semibold rounded-md py-3 px-4 bg-white cursor-pointer hover:bg-blue-400 hover:text-white transition-colors duration-500' href="https://www.buymeacoffee.com/jehrbear" target="_blank" rel="noopener noreferrer">Donate ❤️</a>
             </div>
         </nav>
     );

@@ -4,7 +4,6 @@ import Invoice from './components/Invoice/Invoice';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import InvoiceInputsMenu from './components/InvoiceInputs/InputsParentContainer';
-import IvoiceTotal from './components/Invoice/InvoiceTotal';
 import { InvoiceProvider } from './context/InvoiceContext'; // Import the provider
 import NavBar from './components/NavBar';
 

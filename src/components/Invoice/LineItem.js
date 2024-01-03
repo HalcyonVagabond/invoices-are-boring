@@ -43,7 +43,7 @@ const LineItem = ({ item, index }) => {
         </svg>
         {showOptions && (
           <div className="absolute right-0 bg-white border mt-2 py-2 w-40 z-[100] bg-blue-500">
-            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={handleDelete}>Delete</a>
+            <button className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={handleDelete}>Delete</button>
             {/* Add more actions here if needed */}
           </div>
         )}

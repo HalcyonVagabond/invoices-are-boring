@@ -5,7 +5,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import InvoiceInputsMenu from './components/InvoiceInputs/InvoiceInputsMenu';
 import { InvoiceProvider } from './context/InvoiceContext'; // Import the provider
-import NavBar from './components/NavBar';
+import NavBar from './components/Navigation/NavBar';
+import Footer from './components/Navigation/Footer';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           pauseOnHover
         />
       </div>
+      <Footer />
     </InvoiceProvider>
   );
 }

@@ -13,14 +13,14 @@ const InvoiceTitleInput = () => {
     };
 
     return (
-        <div className="shadow-lg p-6 rounded-lg bg-white mt-5 w-full max-w-[300px] h-[180px]">
+        <div className="shadow-md md:shadow-lg p-6 rounded-lg bg-white mt-5 w-full md:max-w-[320px] h-[180px] mx-auto">
             <h3 className="text-lg font-semibold mb-4">Invoice Title</h3>
             <input
                 type="text"
                 value={invoiceTitle}
                 onChange={handleChange}
                 placeholder="Invoice Title"
-                className={`px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300`}
+                className={`w-full mx-2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300`}
             />
             <div className="flex justify-between mt-3 px-3">
                 <button onClick={() => handleAlignment('left')} className={`px-3 py-1 rounded-md ${titleAlignment === 'left' ? 'bg-blue-500 text-white' : 'hover:bg-blue-200 transition-colors duration-500'}`}>Left</button>

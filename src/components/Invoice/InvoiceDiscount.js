@@ -34,7 +34,7 @@ const DiscountsDisplay = () => {
                     <div className={`p-4 text-${discount.alignment} my-2 border-t w-[50%]`}>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-gray-600">Subtotal:</span>
-                            <span className="text-lg font-semibold">${totals[index].toFixed(2)}</span>
+                            <span className="text-lg font-semibold">${totals[index]?.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-gray-600">Discount:</span>

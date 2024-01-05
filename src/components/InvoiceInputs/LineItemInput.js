@@ -5,8 +5,6 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ReorderModal from '../General/ReorderModal';
-import LineItem from '../Invoice/LineItem';
-
 
 function InvoiceItemEntry() {
     const { invoiceItems, invoiceItemActions } = useContext(InvoiceContext);

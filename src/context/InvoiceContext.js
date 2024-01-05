@@ -32,6 +32,8 @@ export const InvoiceProvider = ({ children }) => {
     return localDiscounts ? JSON.parse(localDiscounts) : [];
 });
 
+  const [isExporting, setIsExporting] = useState(false);
+
   // Initializing Type Modification Methods
 
   const invoiceItemActions = modifySectionItem(setInvoiceItems);
@@ -62,7 +64,9 @@ export const InvoiceProvider = ({ children }) => {
       headerSections,
       headerSectionActions,
       discounts,
-      discountActions
+      discountActions,
+      isExporting,
+      setIsExporting,
   }}>
       {children}
   </InvoiceContext.Provider>

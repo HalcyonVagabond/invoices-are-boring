@@ -8,30 +8,37 @@ import InvoiceContext from '../context/InvoiceContext';
 
 function Body() {
   const invoiceRef = useRef(null);
-  const { invoiceTitle } = useContext(InvoiceContext);
+  const { invoiceTitle, setIsExporting } = useContext(InvoiceContext);
 
   const exportPDF = () => {
-    const invoiceElement = invoiceRef.current;
-    if (invoiceElement) {
-      html2canvas(invoiceElement, {
-        scale: 2, // Higher scale for better resolution
-        backgroundColor: "#FFF", // Set a white background
-        useCORS: true // For images loaded from external URLs
-      }).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF({
-          orientation: 'p',
-          unit: 'px',
-          format: [canvas.width, canvas.height], // Use canvas dimensions
+    setIsExporting(true);
+
+    setTimeout(() => {
+      const invoiceElement = invoiceRef.current;
+      if (invoiceElement) {
+        html2canvas(invoiceElement, {
+          scale: 2, // Higher scale for better resolution
+          backgroundColor: "#FFF", // Set a white background
+          useCORS: true // For images loaded from external URLs
+        }).then((canvas) => {
+          setIsExporting(false);
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPDF({
+            orientation: 'p',
+            unit: 'px',
+            format: [canvas.width, canvas.height], // Use canvas dimensions
+          });
+          pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+          pdf.save(`${invoiceTitle.title || 'invoice'}.pdf`);
+        }).catch((error) => {
+          setIsExporting(false);
+          console.error('Error generating canvas', error);
         });
-        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-        pdf.save(`${invoiceTitle.title || 'invoice'}.pdf`);
-      }).catch((error) => {
-        console.error('Error generating canvas', error);
-      });
-    } else {
-      console.error('The invoice element was not found!');
-    }
+      } else {
+        setIsExporting(false);
+        console.error('The invoice element was not found!');
+      }
+    }, 500); // Wait for half a second (500 milliseconds)
   };
 
   return (

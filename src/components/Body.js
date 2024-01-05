@@ -25,7 +25,7 @@ function Body() {
           format: [canvas.width, canvas.height], // Use canvas dimensions
         });
         pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-        pdf.save(`${invoiceTitle || 'invoice'}.pdf`);
+        pdf.save(`${invoiceTitle.title || 'invoice'}.pdf`);
       }).catch((error) => {
         console.error('Error generating canvas', error);
       });

@@ -38,7 +38,7 @@ const calculateTotals = (invoiceItems, discounts) => {
     update: (index, newItem) => setSection(prevItems => prevItems.map((item, idx) => idx === index ? newItem : item)),
     remove: (index) => setSection(prevItems => prevItems.filter((_, idx) => idx !== index)),
     reorder: (startIndex, endIndex) => {
-        console.log("In reorder helper!")
+        // console.log("In reorder helper!")
         setSection((prevItems) => {
           const result = Array.from(prevItems);
           const [removed] = result.splice(startIndex, 1);

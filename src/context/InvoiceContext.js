@@ -47,7 +47,7 @@ export const InvoiceProvider = ({ children }) => {
 
     // Update totals whenever invoiceItems or discounts change
     const newTotals = calculateTotals(invoiceItems, discounts);
-    console.log(newTotals, "newTotals");
+    // console.log(newTotals, "newTotals");
     setTotals(newTotals);
   }, [invoiceItems, invoiceTitle, headerSections, discounts]);
 

@@ -1,18 +1,21 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { calculateTotals, modifySectionItem } from '../helpers/Helpers';
 
 const InvoiceContext = createContext();
 
 export const InvoiceProvider = ({ children }) => {
-  // State for invoice title
-  const [invoiceTitle, setInvoiceTitle] = useState(() => {
-    const localTitle = localStorage.getItem('invoiceTitle');
-    return localTitle || '';
-  });
 
-  const [titleAlignment, setTitleAlignment] = useState(() => {
-    const localTitle = localStorage.getItem('titleAlignment');
-    return localTitle || 'right';
-  })
+  const [totals, setTotals] = useState([]);
+  
+  const [invoiceTitle, setInvoiceTitle] = useState(() => {
+    const localData = localStorage.getItem('invoiceTitle');
+    try {
+        const parsedData = JSON.parse(localData);
+        return parsedData && typeof parsedData === 'object' ? parsedData : { title: localData, alignment: 'right' };
+    } catch {
+        return { title: '', alignment: 'right' };
+    }
+});
 
   const [headerSections, setHeaderSections] = useState(() => {
     const localHeaderSections = localStorage.getItem('headerSections');
@@ -24,73 +27,47 @@ export const InvoiceProvider = ({ children }) => {
     return localData ? JSON.parse(localData) : [];
   });
 
-  // Load from localStorage on initial load
+  const [discounts, setDiscounts] = useState(() => {
+    const localDiscounts = localStorage.getItem('discounts');
+    return localDiscounts ? JSON.parse(localDiscounts) : [];
+});
+
+  // Initializing Type Modification Methods
+
+  const invoiceItemActions = modifySectionItem(setInvoiceItems);
+  const headerSectionActions = modifySectionItem(setHeaderSections);
+  const discountActions = modifySectionItem(setDiscounts);
+
+  // Calculate totals whenever invoiceItems or discounts change
   useEffect(() => {
-    const storedInvoiceItems = JSON.parse(localStorage.getItem('invoiceItems'));
-    if (storedInvoiceItems) {
-      setInvoiceItems(storedInvoiceItems);
-    }
-    const storedInvoiceTitle = localStorage.getItem('invoiceTitle');
-    if (storedInvoiceTitle) {
-      setInvoiceTitle(storedInvoiceTitle);
-    }
-  }, []);
+    const newTotals = calculateTotals(invoiceItems, discounts);
+    // console.log(newTotals)
+    setTotals(newTotals);
+  }, [invoiceItems, discounts]);
 
   // Save to localStorage whenever they change
   useEffect(() => {
-    localStorage.setItem('invoiceTitle', invoiceTitle);
-    localStorage.setItem('titleAlignment', titleAlignment);
+    localStorage.setItem('invoiceTitle', JSON.stringify(invoiceTitle));
     localStorage.setItem('headerSections', JSON.stringify(headerSections));
     localStorage.setItem('invoiceItems', JSON.stringify(invoiceItems));
-  }, [invoiceItems, invoiceTitle, titleAlignment, headerSections]);
+    localStorage.setItem('discounts', JSON.stringify(discounts));
+  }, [invoiceItems, invoiceTitle, headerSections, discounts]);
 
-  const addInvoiceItem = (item) => {
-    setInvoiceItems([...invoiceItems, item]);
-  };
-
-  const updateInvoiceItem = (index, newItemContent) => {
-    const updatedItems = [...invoiceItems];
-    updatedItems[index] = newItemContent;
-    setInvoiceItems(updatedItems);
-};
-
-  const removeInvoiceItem = (index) => {
-    const newItems = invoiceItems.filter((_, itemIndex) => itemIndex !== index);
-    setInvoiceItems(newItems);
-  };
-
-  const addHeaderSection = (section) => {
-    setHeaderSections([...headerSections, section]);
-  };
-
-  const updateHeaderSection = (index, newSection) => {
-    const updatedSections = [...headerSections];
-    updatedSections[index] = newSection;
-    setHeaderSections(updatedSections);
-  };
-
-  const removeHeaderSection = (index) => {
-    const newSections = headerSections.filter((_, sectionIndex) => sectionIndex !== index);
-    setHeaderSections(newSections);
-  };
 
   return (
     <InvoiceContext.Provider value={{
+      totals,
       invoiceItems,
-      addInvoiceItem,
-      updateInvoiceItem,
-      removeInvoiceItem,
+      invoiceItemActions,
       invoiceTitle,
       setInvoiceTitle,
-      titleAlignment,
-      setTitleAlignment,
       headerSections,
-      addHeaderSection,
-      updateHeaderSection,
-      removeHeaderSection
-    }}>
+      headerSectionActions,
+      discounts,
+      discountActions
+  }}>
       {children}
-    </InvoiceContext.Provider>
+  </InvoiceContext.Provider>
 
   );
 };

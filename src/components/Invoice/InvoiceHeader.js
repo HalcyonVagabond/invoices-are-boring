@@ -5,7 +5,7 @@ const HeaderSectionsDisplay = () => {
     const { headerSections } = useContext(InvoiceContext);
 
     return (
-        <div>
+        <div> 
             {headerSections.map((section, index) => (
                 <div key={index} className={`p-4 text-${section.alignment}`}>
                     <h2 className="text-xl font-bold">{section.title}</h2>

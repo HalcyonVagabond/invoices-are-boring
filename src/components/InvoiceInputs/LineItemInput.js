@@ -7,7 +7,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 function InvoiceItemEntry() {
-    const { addInvoiceItem, invoiceItems, updateInvoiceItem, removeInvoiceItem } = useContext(InvoiceContext);
+    const { invoiceItems, invoiceItemActions } = useContext(InvoiceContext);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [rate, setRate] = useState('');
@@ -31,7 +31,8 @@ function InvoiceItemEntry() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addInvoiceItem({ title, description, rate, hours });
+        const id  = Array.from(window.crypto.getRandomValues(new Uint8Array(5)), byte => byte.toString(16).padStart(2, '0')).join('');
+        invoiceItemActions.add({ title, description, rate, hours, id });
         setTitle('');
         setDescription('');
         setRate('');
@@ -40,7 +41,7 @@ function InvoiceItemEntry() {
 
     const handleUpdateItem = (index, key, value) => {
         const updatedItem = { ...invoiceItems[index], [key]: value };
-        updateInvoiceItem(index, updatedItem);
+        invoiceItemActions.update(index, updatedItem);
     };
 
     return (
@@ -66,7 +67,7 @@ function InvoiceItemEntry() {
                     type="number"
                     value={rate}
                     onChange={handleRateChange}
-                    placeholder="Rate per Hour"
+                    placeholder="Rate"
                     className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
                 />
                 <input
@@ -116,7 +117,7 @@ function InvoiceItemEntry() {
                     type="number"
                     value={item.rate}
                     onChange={(e) => handleUpdateItem(index, 'rate', e.target.value)}
-                    placeholder="Rate per Hour"
+                    placeholder="Rate"
                     className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
                 />
                 <input
@@ -127,7 +128,7 @@ function InvoiceItemEntry() {
                     className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
                 />
                             
-                            <button className='hover:bg-red-600 border border-red-600 hover:text-white cursor-pointer py-2 rounded-md w-[80px] mx-auto transition-colors duration-200' onClick={()=>window.confirm('Are you sure you want to delete this header section?', removeInvoiceItem(index))}>Remove</button>
+                            <button className='hover:bg-red-600 border border-red-600 hover:text-white cursor-pointer py-2 rounded-md w-[80px] mx-auto transition-colors duration-200' onClick={()=>window.confirm('Are you sure you want to delete this invoice item?', invoiceItemActions.remove(index))}>Remove</button>
                         </div>
                     </AccordionDetails>
                 </Accordion>

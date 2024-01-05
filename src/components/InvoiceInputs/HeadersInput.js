@@ -6,14 +6,14 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const HeaderInput = () => {
-    const { headerSections, addHeaderSection, updateHeaderSection, removeHeaderSection } = useContext(InvoiceContext);
+    const { headerSections, headerSectionActions } = useContext(InvoiceContext);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [alignment, setAlignment] = useState('left');
 
     const handleAddSection = (e) => {
         e.preventDefault();
-        addHeaderSection({ title, content, alignment });
+        headerSectionActions.add({ title, content, alignment });
         setTitle('');
         setContent('');
         setAlignment('left');
@@ -21,7 +21,7 @@ const HeaderInput = () => {
 
     const handleUpdateSection = (index, key, value) => {
         const updatedSection = { ...headerSections[index], [key]: value };
-        updateHeaderSection(index, updatedSection);
+        headerSectionActions.update(index, updatedSection);
     };
 
     return (
@@ -96,7 +96,7 @@ const HeaderInput = () => {
                                 <button onClick={() => handleUpdateSection(index, 'alignment', 'center')} className={`px-3 py-1 rounded-md ${section.alignment === 'center' ? 'bg-blue-500 text-white' : 'hover:bg-blue-200 transition-colors duration-500'}`} >Center</button>
                                 <button onClick={() => handleUpdateSection(index, 'alignment', 'right')} className={`px-3 py-1 rounded-md ${section.alignment === 'right' ? 'bg-blue-500 text-white' : 'hover:bg-blue-200 transition-colors duration-500'}`}>Right</button>
                             </div>
-                            <button className='border border-red-600 hover:bg-red-600 hover:text-white transition-colors duration-200 w-[80px] mx-auto cursor-pointer py-2 rounded-md' onClick={()=>window.confirm('Are you sure you want to delete this header section?', removeHeaderSection(index))}>Remove</button>
+                            <button className='border border-red-600 hover:bg-red-600 hover:text-white transition-colors duration-200 w-[80px] mx-auto cursor-pointer py-2 rounded-md' onClick={()=>window.confirm('Are you sure you want to delete this header section?', headerSectionActions.remove(index))}>Remove</button>
                         </div>
                     </AccordionDetails>
                 </Accordion>

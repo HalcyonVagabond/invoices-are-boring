@@ -39,7 +39,7 @@ const DiscountsDisplay = () => {
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-gray-600">Discount:</span>
                             <span className="text-lg">
-                                {discount.type === 'amount' ? `-$${discount.value}` : `${discount.value}% (-$${(totals[index]-totals[index+1]).toFixed(2)})`} off {targetTitle}
+                                {discount.type === 'amount' ? `-$${discount.value}` : `${discount.value}% (-$${(totals[index]-totals[index+1]).toFixed(2)})`} off<br/>{targetTitle}
                             </span>
                         </div>
                         {discount.description && (

@@ -14,7 +14,7 @@ const Invoice = forwardRef((props, ref) => {
             <div ref={ref} className="absolute left-0 md:relative bg-white shadow-lg border rounded-sm overflow-hidden px-5 py-7 bg-white w-[100vw] md:max-w-[8in] min-h-[11in]">
                 
                 <div className={`title-section text-${invoiceTitle.alignment}`}>
-                    <h1 className='text-4xl font-extrabold'>{invoiceTitle.title ? invoiceTitle.title : "ADD TITLE"}</h1>
+                    <h1 className='text-5xl font-extrabold'>{invoiceTitle.title ? invoiceTitle.title : "ADD TITLE"}</h1>
                 </div>
                 
                 <InvoiceHeader />
@@ -26,7 +26,6 @@ const Invoice = forwardRef((props, ref) => {
 
                 <InvoiceDiscount />
 
-                {/* Additional sections (like totals, notes, etc.) can be added here */}
                 <IvoiceTotal />
             </div>
             </div>

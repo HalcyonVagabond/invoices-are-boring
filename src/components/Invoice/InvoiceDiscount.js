@@ -31,15 +31,15 @@ const DiscountsDisplay = () => {
                 const targetTitle = getTargetTitle(discount.target);
                 return (
                     <div key={index} className={`flex ${alignmentInterpreter(discount.alignment)} w-full`}>
-                    <div className={`p-4 text-${discount.alignment} mb-2 border-b w-[50%]`}>
+                    <div className={`p-4 text-${discount.alignment} my-2 border-t w-[50%]`}>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-gray-600">Subtotal:</span>
-                            <span className="text-xl font-bold">${totals[index]}</span>
+                            <span className="text-lg font-semibold">${totals[index].toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-gray-600">Discount:</span>
-                            <span className="text-xl font-bold">
-                                {discount.type === 'amount' ? `-$${discount.value}` : `${discount.value}% (-$${totals[index]-totals[index+1]})`} off {targetTitle}
+                            <span className="text-lg">
+                                {discount.type === 'amount' ? `-$${discount.value}` : `${discount.value}% (-$${(totals[index]-totals[index+1]).toFixed(2)})`} off {targetTitle}
                             </span>
                         </div>
                         {discount.description && (

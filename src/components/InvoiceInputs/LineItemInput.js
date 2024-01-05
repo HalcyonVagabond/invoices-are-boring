@@ -4,6 +4,8 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ReorderModal from '../General/ReorderModal';
+import LineItem from '../Invoice/LineItem';
 
 
 function InvoiceItemEntry() {
@@ -44,10 +46,13 @@ function InvoiceItemEntry() {
         invoiceItemActions.update(index, updatedItem);
     };
 
+    
+
     return (
         <div className="shadow-lg p-6 rounded-lg bg-white mt-5 w-full overflow-auto h-full">
+            
             <h3 className="text-lg font-semibold mb-4">Add Invoice Item</h3>
-            <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+            <form onSubmit={handleSubmit} className="flex flex-col space-y-4 mb-4">
                 <input
                     type="text"
                     value={title}
@@ -86,6 +91,9 @@ function InvoiceItemEntry() {
                     </svg>
                 </button>
             </form>
+
+            { invoiceItems.length >= 2 ?<ReorderModal items={invoiceItems} onReorder={invoiceItemActions.reorder} itemType={'Invoice Items'}/> : null }
+            
             {invoiceItems.map((item, index) => (
                 <Accordion key={index}>
                     <AccordionSummary

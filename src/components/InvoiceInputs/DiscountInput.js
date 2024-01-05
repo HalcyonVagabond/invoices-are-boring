@@ -4,6 +4,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ReorderModal from '../General/ReorderModal';
 
 const DiscountInput = () => {
     const { discounts, discountActions, invoiceItems } = useContext(InvoiceContext);
@@ -11,11 +12,17 @@ const DiscountInput = () => {
     const [type, setType] = useState('percentage'); // 'percentage' or 'amount'
     const [value, setValue] = useState('');
     const [description, setDescription] = useState('');
-    const [alignment, setAlignment] = useState('left');
+    const [alignment, setAlignment] = useState('right');
 
     const handleAddSection = (e) => {
         e.preventDefault();
-        discountActions.add({ type, value, description, alignment, target });
+        const id = Array.from(window.crypto.getRandomValues(new Uint8Array(5)), byte => byte.toString(16).padStart(2, '0')).join('');
+        const targetItemTitle = target === 'Total' ? 'Total' : invoiceItems.find(item => item.id === target)?.title || 'Item';
+        const discountTitle = type === 'amount'
+            ? `-$${value} off ${targetItemTitle}`
+            : `${value}% off ${targetItemTitle}`;
+    
+        discountActions.add({ type, value, description, alignment, target, id, title: discountTitle });
         setType('percentage');
         setValue('');
         setDescription('');
@@ -23,15 +30,24 @@ const DiscountInput = () => {
         setTarget('Total'); 
     };
 
-    const handleUpdateSection = (index, key, value) => {
-        const updatedSection = { ...discounts[index], [key]: value };
-        discountActions.update(index, updatedSection);
+    const handleUpdateSection = (index, key, updatedValue) => {
+        const updatedDiscount = { ...discounts[index], [key]: updatedValue };
+        
+        if (['type', 'value', 'target'].includes(key)) {
+            const targetItemTitle = updatedDiscount.target === 'Total' ? 'Total' : invoiceItems.find(item => item.id === updatedDiscount.target)?.title || 'Item';
+            const discountTitle = updatedDiscount.type === 'amount'
+                ? `-$${updatedDiscount.value} off ${targetItemTitle}`
+                : `${updatedDiscount.value}% off ${targetItemTitle}`;
+            updatedDiscount.title = discountTitle;
+        }
+        
+        discountActions.update(index, updatedDiscount);
     };
 
     return (
         <div className="shadow-lg p-6 rounded-lg bg-white mt-5 w-full overflow-auto h-full">
             <h3 className="text-lg font-semibold mb-4">Add Discount Section</h3>
-            <form onSubmit={handleAddSection} className="flex flex-col space-y-4">
+            <form onSubmit={handleAddSection} className="flex flex-col space-y-4 mb-4">
                 <select
                     value={type}
                     onChange={(e) => setType(e.target.value)}
@@ -66,7 +82,6 @@ const DiscountInput = () => {
                 />
                 <select
                     value={alignment}
-                    defaultValue='right'
                     onChange={(e) => setAlignment(e.target.value)}
                     className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
                 >
@@ -78,11 +93,14 @@ const DiscountInput = () => {
                     type="submit"
                     className="self-center p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                 >
-                    {/* SVG Icon */}
+                     <svg className="w-5 h-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                        <path d="M12 4v16m8-8H4"/>
+                    </svg>
                 </button>
             </form>
             
             {/* Accordion for editing discount sections */}
+            { discounts.length >= 2 ? <ReorderModal items={discounts} onReorder={discountActions.reorder} itemType={'Discounts'}/> : null }
             {discounts.map((discount, index) => (
     <Accordion key={index}>
         <AccordionSummary

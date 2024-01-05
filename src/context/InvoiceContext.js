@@ -38,19 +38,17 @@ export const InvoiceProvider = ({ children }) => {
   const headerSectionActions = modifySectionItem(setHeaderSections);
   const discountActions = modifySectionItem(setDiscounts);
 
-  // Calculate totals whenever invoiceItems or discounts change
-  useEffect(() => {
-    const newTotals = calculateTotals(invoiceItems, discounts);
-    // console.log(newTotals)
-    setTotals(newTotals);
-  }, [invoiceItems, discounts]);
-
   // Save to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem('invoiceTitle', JSON.stringify(invoiceTitle));
     localStorage.setItem('headerSections', JSON.stringify(headerSections));
     localStorage.setItem('invoiceItems', JSON.stringify(invoiceItems));
     localStorage.setItem('discounts', JSON.stringify(discounts));
+
+    // Update totals whenever invoiceItems or discounts change
+    const newTotals = calculateTotals(invoiceItems, discounts);
+    console.log(newTotals, "newTotals");
+    setTotals(newTotals);
   }, [invoiceItems, invoiceTitle, headerSections, discounts]);
 
 

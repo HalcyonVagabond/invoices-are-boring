@@ -5,6 +5,8 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+import ReorderModal from '../General/ReorderModal';
+
 const HeaderInput = () => {
     const { headerSections, headerSectionActions } = useContext(InvoiceContext);
     const [title, setTitle] = useState('');
@@ -13,7 +15,8 @@ const HeaderInput = () => {
 
     const handleAddSection = (e) => {
         e.preventDefault();
-        headerSectionActions.add({ title, content, alignment });
+        const id  = Array.from(window.crypto.getRandomValues(new Uint8Array(5)), byte => byte.toString(16).padStart(2, '0')).join('');
+        headerSectionActions.add({ title, content, alignment, id });
         setTitle('');
         setContent('');
         setAlignment('left');
@@ -26,10 +29,11 @@ const HeaderInput = () => {
 
     return (
         <div className="shadow-lg p-6 rounded-lg bg-white mt-5 w-full overflow-auto h-full">
+            
             {/* New section form */}
 
             <h3 className="text-lg font-semibold mb-4">Add Header Section</h3>
-            <form onSubmit={handleAddSection} className="flex flex-col space-y-4">
+            <form onSubmit={handleAddSection} className="flex flex-col space-y-4 mb-4">
                 <input
                     type="text"
                     value={title}
@@ -62,6 +66,8 @@ const HeaderInput = () => {
                     </svg>
                 </button>
             </form>
+
+            { headerSections.length >= 2 ? <ReorderModal items={headerSections} onReorder={headerSectionActions.reorder} itemType={'Header Sections'}/> : null }
             
             {/* Accordion for editing header sections */}
             {headerSections.map((section, index) => (

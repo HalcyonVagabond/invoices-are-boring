@@ -44,7 +44,9 @@ function InvoiceItemEntry() {
         invoiceItemActions.update(index, updatedItem);
     };
 
-    
+    function isEven(number) {
+        return number % 2 === 0;
+    }
 
     return (
         <div className="shadow-lg p-6 rounded-lg bg-white mt-5 w-full overflow-auto h-full">
@@ -95,7 +97,7 @@ function InvoiceItemEntry() {
             {invoiceItems.map((item, index) => (
                 <Accordion key={index}>
                     <AccordionSummary
-                        className='bg-blue-200'
+                        className={`${isEven(index) ?  '!bg-blue-700' : '!bg-blue-500'} ${index === 0 && '!rounded-t-md'} !text-white`}
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls={`panel${index}a-content`}
                         id={`panel${index}a-header`}

@@ -14,6 +14,10 @@ const DiscountInput = () => {
     const [description, setDescription] = useState('');
     const [alignment, setAlignment] = useState('right');
 
+    function isEven(number) {
+        return number % 2 === 0;
+    }
+
     const handleAddSection = (e) => {
         e.preventDefault();
         const id = Array.from(window.crypto.getRandomValues(new Uint8Array(5)), byte => byte.toString(16).padStart(2, '0')).join('');
@@ -104,6 +108,7 @@ const DiscountInput = () => {
             {discounts.map((discount, index) => (
     <Accordion key={index}>
         <AccordionSummary
+            className={`${isEven(index) ?  '!bg-blue-700' : '!bg-blue-500'} ${index === 0 && '!rounded-t-md'} !text-white`}
             expandIcon={<ExpandMoreIcon />}
             aria-controls={`panel${index}a-content`}
             id={`panel${index}a-header`}

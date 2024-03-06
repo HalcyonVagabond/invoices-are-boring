@@ -7,7 +7,6 @@ import './App.css';
 import Body from './components/Body';
 
 function App() {
-  
   return (
     <InvoiceProvider> 
       <div className="App">

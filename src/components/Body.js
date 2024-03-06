@@ -1,14 +1,19 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useContext, useEffect } from 'react';
 import Invoice from './Invoice/Invoice';
 import { ToastContainer } from 'react-toastify';
 import InvoiceInputsMenu from './InvoiceInputs/InvoiceInputsMenu';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import InvoiceContext from '../context/InvoiceContext';
+import { trackVisit } from '../helpers/Helpers';
 
 function Body() {
   const invoiceRef = useRef(null);
   const { invoiceTitle, setIsExporting } = useContext(InvoiceContext);
+
+  useEffect(() => {
+    trackVisit();
+  }, []);
 
   const exportPDF = () => {
     setIsExporting(true);

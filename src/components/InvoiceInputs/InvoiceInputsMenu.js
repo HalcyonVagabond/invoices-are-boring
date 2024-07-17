@@ -31,6 +31,16 @@ const InvoiceInputsMenu = ({ exportPDF }) => {
         setIsMenuOpen(!isMenuOpen);
     };
 
+    function clearInvoice(){
+        if ( window.confirm("Are you SURE you want to delete this invoice?\n\nYou CANNOT get it back!") ){
+            localStorage.removeItem('invoiceTitle')
+            localStorage.removeItem('invoiceItems')
+            localStorage.removeItem('headerSections')
+            localStorage.removeItem('discounts')
+            window.location.reload()
+        }
+    }
+
     // Decide the anchor based on the screen size
     const getDrawerAnchor = () => {
         if (isDesktop) return 'left';
@@ -76,7 +86,7 @@ const InvoiceInputsMenu = ({ exportPDF }) => {
                             <MenuIcon className={`${isDesktop && 'rotate-90'}`} />
                         </IconButton>
              
-                    <button onClick={exportPDF} className='bg-blue-500 hover:bg-blue-700 px-5 py-2 text-white rounded-md mb-4 font-bold transition-colors duration-500'>Export to PDF</button>
+                    <button onClick={exportPDF} className='bg-blue-500 hover:bg-blue-700 px-5 py-2 text-white rounded-md my-3 font-bold transition-colors duration-500'>Export to PDF</button>
                     <InvoiceTitleInput />
                     <Accordion>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
@@ -103,6 +113,7 @@ const InvoiceInputsMenu = ({ exportPDF }) => {
                         </AccordionDetails>
                     </Accordion>
                     {/* Add more input forms or accordions here as needed */}
+                <button className='bg-red-500 text-white h-[40px] mt-5 rounded-sm hover:bg-red-700 transition-colors' onClick={clearInvoice}>Clear</button>
                 </div>
             </Drawer>
         </>

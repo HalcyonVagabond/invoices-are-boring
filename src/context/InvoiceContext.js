@@ -15,7 +15,7 @@ export const InvoiceProvider = ({ children }) => {
     } catch {
         return { title: '', alignment: 'right' };
     }
-});
+  });
 
   const [headerSections, setHeaderSections] = useState(() => {
     const localHeaderSections = localStorage.getItem('headerSections');

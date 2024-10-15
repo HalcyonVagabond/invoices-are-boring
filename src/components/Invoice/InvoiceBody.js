@@ -16,7 +16,7 @@ const LineItemTable = ({ items, type }) => {
             Description
           </th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            {isHourly ? 'Rate' : 'Unit Cost'}
+            {isHourly ? 'Rate' : 'Price'}
           </th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             {isHourly ? 'Hours' : 'Quantity'}
@@ -73,3 +73,4 @@ const InvoiceBody = () => {
 };
 
 export default InvoiceBody;
+

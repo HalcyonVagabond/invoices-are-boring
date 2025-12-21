@@ -3,6 +3,7 @@ import InvoiceContext from '../../context/InvoiceContext';
 
 const DiscountsDisplay = () => {
     const { discounts, invoiceItems, totals } = useContext(InvoiceContext);
+    const discountBreakdown = totals.discountBreakdown || [0];
 
     const getTargetTitle = (target) => {
         if (target === 'Total') {
@@ -29,17 +30,21 @@ const DiscountsDisplay = () => {
         <div>
             {discounts.map((discount, index) => {
                 const targetTitle = getTargetTitle(discount.target);
+                const beforeDiscount = discountBreakdown[index] || 0;
+                const afterDiscount = discountBreakdown[index + 1] || 0;
+                const discountAmount = beforeDiscount - afterDiscount;
+                
                 return (
-                    <div key={index} className={`flex ${alignmentInterpreter(discount.alignment)} w-full`}>
-                    <div className={`p-4 text-${discount.alignment} my-2 border-t w-[50%]`}>
+                    <div key={index} className={'flex ' + alignmentInterpreter(discount.alignment) + ' w-full'}>
+                    <div className={'p-4 text-' + discount.alignment + ' my-2 border-t w-[50%]'}>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-gray-600">Subtotal:</span>
-                            <span className="text-lg font-semibold">${totals[index]?.toFixed(2)}</span>
+                            <span className="text-lg font-semibold">${beforeDiscount.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-gray-600">Discount:</span>
                             <span className="text-lg">
-                                {discount.type === 'amount' ? `-$${discount.value}` : `${discount.value}% (-$${(totals[index]-totals[index+1]).toFixed(2)})`} off<br/>{targetTitle}
+                                {discount.type === 'amount' ? '-$' + discount.value : discount.value + '% (-$' + discountAmount.toFixed(2) + ')'} off<br/>{targetTitle}
                             </span>
                         </div>
                         {discount.description && (

@@ -43,39 +43,74 @@ const trackVisit = async () => {
     }
   };
 
-const calculateTotals = (invoiceItems, discounts) => {
-    let subtotal = invoiceItems.reduce((acc, item) => acc + (item.rate * item.hours), 0);
-    let totals = [subtotal]; // Array to store subtotals after each discount
+// Helper to calculate item total (supports both hourly and fixed billing types)
+const getItemTotal = (item) => {
+    if (item.billingType === 'fixed' || item.quantity) {
+        return (parseFloat(item.price) || 0) * (parseFloat(item.quantity) || 0);
+    }
+    return (parseFloat(item.rate) || 0) * (parseFloat(item.hours) || 0);
+};
+
+const calculateTotals = (invoiceItems, discounts, taxes = []) => {
+    // Calculate initial subtotal
+    const subtotal = invoiceItems.reduce((acc, item) => acc + getItemTotal(item), 0);
+    
+    // Track running total after each discount for display purposes
+    let runningTotal = subtotal;
+    const discountBreakdown = [subtotal];
 
     const applyItemSpecificDiscount = (item, discount) => {
+        const itemTotal = getItemTotal(item);
         const discountAmount = discount.type === 'percentage'
-            ? (item.rate * item.hours) * (discount.value / 100)
+            ? itemTotal * (discount.value / 100)
             : parseFloat(discount.value);
         return discountAmount;
     };
 
-    const applyTotalDiscount = (discount) => {
+    const applyTotalDiscount = (discount, currentTotal) => {
         const discountAmount = discount.type === 'percentage'
-            ? subtotal * (discount.value / 100)
+            ? currentTotal * (discount.value / 100)
             : parseFloat(discount.value);
         return discountAmount;
     };
 
+    // Apply discounts
     discounts.forEach(discount => {
         if (discount.target !== 'Total') {
-            // Apply item-specific discount
             const targetItem = invoiceItems.find(item => item.id === discount.target);
             if (targetItem) {
-                subtotal -= applyItemSpecificDiscount(targetItem, discount);
+                runningTotal -= applyItemSpecificDiscount(targetItem, discount);
             }
         } else {
-            // Apply total discount
-            subtotal -= applyTotalDiscount(discount);
+            runningTotal -= applyTotalDiscount(discount, runningTotal);
         }
-        totals.push(subtotal); // Add updated subtotal after each discount
+        discountBreakdown.push(runningTotal);
     });
 
-    return totals; // Return the array of subtotals
+    const afterDiscounts = runningTotal;
+
+    // Calculate taxes (applied after discounts)
+    let taxAmount = 0;
+    const taxBreakdown = [];
+    
+    taxes.forEach(tax => {
+        const amount = tax.type === 'percentage'
+            ? afterDiscounts * (parseFloat(tax.value) || 0) / 100
+            : parseFloat(tax.value) || 0;
+        taxAmount += amount;
+        taxBreakdown.push({ ...tax, calculatedAmount: amount });
+    });
+
+    const total = afterDiscounts + taxAmount;
+
+    return {
+        subtotal,
+        discountBreakdown,
+        afterDiscounts,
+        taxBreakdown,
+        taxAmount,
+        total
+    };
 };
 
   const modifySectionItem = (setSection) => ({

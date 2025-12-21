@@ -22,18 +22,33 @@ function Body() {
       const invoiceElement = invoiceRef.current;
       if (invoiceElement) {
         html2canvas(invoiceElement, {
-          scale: 2, // Higher scale for better resolution
-          backgroundColor: "#FFF", // Set a white background
-          useCORS: true // For images loaded from external URLs
+          scale: 1.5, // Reduced from 2 - still good quality but smaller file
+          backgroundColor: "#FFF",
+          useCORS: true,
+          logging: false, // Disable logging for cleaner console
+          imageTimeout: 0, // No timeout for images
         }).then((canvas) => {
           setIsExporting(false);
-          const imgData = canvas.toDataURL('image/png');
+          
+          // Use JPEG with compression instead of PNG for smaller file size
+          const imgData = canvas.toDataURL('image/jpeg', 0.92); // 92% quality JPEG
+          
+          // Calculate dimensions for standard letter/A4 sizing
+          const imgWidth = canvas.width;
+          const imgHeight = canvas.height;
+          
+          // Use mm units and calculate proper dimensions
+          const pdfWidth = imgWidth * 0.264583; // Convert px to mm (assuming 96 DPI)
+          const pdfHeight = imgHeight * 0.264583;
+          
           const pdf = new jsPDF({
-            orientation: 'p',
-            unit: 'px',
-            format: [canvas.width, canvas.height], // Use canvas dimensions
+            orientation: pdfHeight > pdfWidth ? 'p' : 'l',
+            unit: 'mm',
+            format: [pdfWidth, pdfHeight],
+            compress: true, // Enable PDF compression
           });
-          pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+          
+          pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
           pdf.save(`${invoiceTitle.title || 'invoice'}.pdf`);
         }).catch((error) => {
           setIsExporting(false);
@@ -43,7 +58,7 @@ function Body() {
         setIsExporting(false);
         console.error('The invoice element was not found!');
       }
-    }, 500); // Wait for half a second (500 milliseconds)
+    }, 500);
   };
 
   return (

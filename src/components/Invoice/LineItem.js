@@ -4,20 +4,25 @@ import InvoiceContext from '../../context/InvoiceContext';
 const LineItem = ({ item, index }) => {
   const { discounts, isExporting } = useContext(InvoiceContext);
 
+  // Determine if item is hourly or fixed
+  const isHourly = item.billingType === 'hourly' || (!item.billingType && item.hours);
+  
+  // Get the rate/price and quantity/hours based on billing type
+  const unitPrice = isHourly ? parseFloat(item.rate) || 0 : parseFloat(item.price) || 0;
+  const quantity = isHourly ? parseFloat(item.hours) || 0 : parseFloat(item.quantity) || 0;
+  const baseTotal = unitPrice * quantity;
+
   // Function to calculate the discount amount
   const calculateDiscount = (discount) => {
     if (discount.type === 'percentage') {
-      return item.rate * (discount.value / 100);
+      return unitPrice * (discount.value / 100);
     } else {
-      return parseFloat(discount.value) / item.hours;
+      return parseFloat(discount.value) / quantity;
     }
   };
 
   const formatRate = (rate) => {
-    // If it's a string, attempt to convert to number
     const numericRate = typeof rate === 'string' ? parseFloat(rate) : rate;
-
-    // Check if the conversion result is a number and is not NaN
     return typeof numericRate === 'number' && !isNaN(numericRate) ? numericRate.toFixed(2) : '0.00';
   };
 
@@ -25,8 +30,8 @@ const LineItem = ({ item, index }) => {
   const itemDiscount = discounts.find((discount) => discount.target === item.id);
 
   // Calculate the discounted rate
-  const discountedRate = itemDiscount ? item.rate - calculateDiscount(itemDiscount) : item.rate;
-  const finalAmount = discountedRate * item.hours;
+  const discountedRate = itemDiscount ? unitPrice - calculateDiscount(itemDiscount) : unitPrice;
+  const finalAmount = discountedRate * quantity;
 
   const Strikethrough = () => (
     <div className={`border-b border border-b-gray-400 ${isExporting ? 'mt-[-4px]' : 'mt-[-10px]'}`}></div>
@@ -41,21 +46,21 @@ const LineItem = ({ item, index }) => {
       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 w-2 relative">
         {itemDiscount ? (
           <>
-            <span className="text-gray-400">{formatRate(item.rate)}</span>
+            <span className="text-gray-400">{formatRate(unitPrice)}</span>
             <Strikethrough />
             <br />
             <span>{discountedRate.toFixed(2)}</span>
           </>
         ) : (
-          formatRate(item.rate)
+          formatRate(unitPrice)
         )}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 w-2">
-        {item.hours}
+        {quantity}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 w-2">
         <span className={itemDiscount ? "text-gray-400" : ""}>
-          {(item.rate * item.hours).toFixed(2)}
+          {baseTotal.toFixed(2)}
         </span>
         {itemDiscount && <Strikethrough />}
         {itemDiscount && <br />}

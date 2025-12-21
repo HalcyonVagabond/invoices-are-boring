@@ -43,7 +43,7 @@ const TaxInput = () => {
         const base = 'flex-1 py-2.5 px-3 text-sm font-medium transition-all duration-200';
         return buttonType === currentType 
             ? base + ' bg-green-500 text-white shadow-sm'
-            : base + ' text-gray-600 hover:bg-gray-100';
+            : base + ' text-slate-400 hover:bg-slate-600';
     };
 
     const getAccordionSummaryClass = (index) => {
@@ -61,8 +61,8 @@ const TaxInput = () => {
     ];
 
     return (
-        <div className="bg-white w-full overflow-auto h-full">
-            <h3 className="text-base font-semibold mb-4 text-gray-700">Add Tax</h3>
+        <div className="w-full overflow-auto h-full">
+            <h3 className="text-base font-semibold mb-4 text-slate-200">Add Tax</h3>
             
             {/* Quick presets */}
             <div className="flex gap-2 mb-4 flex-wrap">
@@ -75,7 +75,7 @@ const TaxInput = () => {
                             setValue(preset.value);
                             setType('percentage');
                         }}
-                        className="px-3 py-1.5 text-xs font-medium bg-green-50 text-green-700 rounded-full hover:bg-green-100 transition-colors"
+                        className="px-3 py-1.5 text-xs font-medium bg-green-500/20 text-green-400 rounded-full hover:bg-green-500/30 transition-colors border border-green-500/30"
                     >
                         {preset.name} ({preset.value}%)
                     </button>
@@ -84,17 +84,17 @@ const TaxInput = () => {
 
             <form onSubmit={handleAddTax} className="flex flex-col space-y-3 mb-4">
                 <div className="flex flex-col">
-                    <label className="text-xs text-gray-500 mb-1 font-medium">Tax Name</label>
+                    <label className="text-xs text-slate-400 mb-1 font-medium">Tax Name</label>
                     <input
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="e.g., Sales Tax, VAT"
-                        className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-gray-50 text-sm"
+                        className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                     />
                 </div>
 
-                <div className="flex rounded-lg overflow-hidden border border-gray-200 bg-gray-50">
+                <div className="flex rounded-lg overflow-hidden border border-slate-600 bg-slate-700">
                     <button
                         type="button"
                         onClick={() => setType('percentage')}
@@ -112,7 +112,7 @@ const TaxInput = () => {
                 </div>
 
                 <div className="flex flex-col">
-                    <label className="text-xs text-gray-500 mb-1 font-medium">
+                    <label className="text-xs text-slate-400 mb-1 font-medium">
                         {type === 'percentage' ? 'Tax Rate (%)' : 'Tax Amount ($)'}
                     </label>
                     <input
@@ -121,7 +121,7 @@ const TaxInput = () => {
                         value={value}
                         onChange={(e) => setValue(e.target.value)}
                         placeholder={type === 'percentage' ? '8.25' : '50.00'}
-                        className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-gray-50 text-sm"
+                        className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                     />
                 </div>
 
@@ -134,7 +134,7 @@ const TaxInput = () => {
                             className={`flex-1 py-2 px-3 rounded-lg text-xs font-medium transition-all duration-200 ${
                                 alignment === option.value
                                     ? 'bg-green-500 text-white shadow-sm'
-                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                    : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
                             }`}
                         >
                             {option.label}
@@ -154,7 +154,7 @@ const TaxInput = () => {
 
             <div className="space-y-2 mt-4">
                 {taxes.map((tax, index) => (
-                    <Accordion key={tax.id || index} className="!rounded-lg !shadow-sm border border-gray-100 before:hidden">
+                    <Accordion key={tax.id || index} className="!rounded-lg !shadow-sm border border-slate-600/50 before:hidden !bg-slate-700/50">
                         <AccordionSummary
                             className={getAccordionSummaryClass(index)}
                             expandIcon={<ExpandMoreIcon className="text-white" />}
@@ -170,19 +170,19 @@ const TaxInput = () => {
                                 </span>
                             </div>
                         </AccordionSummary>
-                        <AccordionDetails className="!p-4 bg-gray-50">
+                        <AccordionDetails className="!p-4 !bg-slate-800/50">
                             <div className="flex flex-col space-y-3">
                                 <div className="flex flex-col">
-                                    <label className="text-xs text-gray-500 mb-1 font-medium">Tax Name</label>
+                                    <label className="text-xs text-slate-400 mb-1 font-medium">Tax Name</label>
                                     <input
                                         type="text"
                                         value={tax.name}
                                         onChange={(e) => handleUpdateTax(index, 'name', e.target.value)}
-                                        className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-white text-sm"
+                                        className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-slate-700 text-slate-200 text-sm"
                                     />
                                 </div>
 
-                                <div className="flex rounded-lg overflow-hidden border border-gray-200 bg-white">
+                                <div className="flex rounded-lg overflow-hidden border border-slate-600 bg-slate-700">
                                     <button
                                         type="button"
                                         onClick={() => handleUpdateTax(index, 'type', 'percentage')}
@@ -200,7 +200,7 @@ const TaxInput = () => {
                                 </div>
 
                                 <div className="flex flex-col">
-                                    <label className="text-xs text-gray-500 mb-1 font-medium">
+                                    <label className="text-xs text-slate-400 mb-1 font-medium">
                                         {tax.type === 'percentage' ? 'Rate (%)' : 'Amount ($)'}
                                     </label>
                                     <input
@@ -208,7 +208,7 @@ const TaxInput = () => {
                                         step="0.01"
                                         value={tax.value}
                                         onChange={(e) => handleUpdateTax(index, 'value', e.target.value)}
-                                        className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-white text-sm"
+                                        className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-slate-700 text-slate-200 text-sm"
                                     />
                                 </div>
 
@@ -221,7 +221,7 @@ const TaxInput = () => {
                                             className={`flex-1 py-2 px-3 rounded-lg text-xs font-medium transition-all duration-200 ${
                                                 tax.alignment === option.value
                                                     ? 'bg-green-500 text-white shadow-sm'
-                                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                                    : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
                                             }`}
                                         >
                                             {option.label}
@@ -235,7 +235,7 @@ const TaxInput = () => {
                                             taxActions.remove(index);
                                         }
                                     }}
-                                    className='mt-2 py-2 px-4 text-sm font-medium text-red-600 border border-red-300 rounded-lg hover:bg-red-50 hover:border-red-400 transition-colors duration-200 self-center'
+                                    className='mt-2 py-2 px-4 text-sm font-medium text-red-400 border border-red-500/30 rounded-lg hover:bg-red-500/20 transition-colors duration-200 self-center'
                                 >
                                     Remove Tax
                                 </button>

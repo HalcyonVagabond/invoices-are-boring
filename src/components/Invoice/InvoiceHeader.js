@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import InvoiceContext from '../../context/InvoiceContext';
 
 const HeaderSectionsDisplay = () => {
-    const { headerSections, invoiceMeta } = useContext(InvoiceContext);
+    const { headerSections, invoiceMeta, logoUrl } = useContext(InvoiceContext);
 
     const formatDate = (dateString) => {
         if (!dateString) return '';
@@ -38,9 +38,45 @@ const HeaderSectionsDisplay = () => {
     const detailsAlignment = invoiceMeta?.detailsAlignment || 'left';
     const billFromAlignment = invoiceMeta?.billFrom?.alignment || 'left';
     const billToAlignment = invoiceMeta?.billTo?.alignment || 'right';
+    const logoAlignment = invoiceMeta?.logoAlignment || 'left';
+    const headerLayout = invoiceMeta?.headerLayout || 'side-by-side';
+
+    const getLayoutClasses = () => {
+        switch (headerLayout) {
+            case 'stacked':
+                return 'flex flex-col gap-6';
+            case 'stacked-left':
+                return 'flex flex-col gap-6';
+            case 'side-by-side':
+            default:
+                return 'flex justify-between gap-8';
+        }
+    };
+
+    const getBillSectionClasses = (type) => {
+        if (headerLayout === 'stacked-left') {
+            return 'text-left';
+        }
+        if (headerLayout === 'stacked') {
+            return getAlignmentClass(type === 'from' ? billFromAlignment : billToAlignment);
+        }
+        // side-by-side
+        return `flex-1 ${getAlignmentClass(type === 'from' ? billFromAlignment : billToAlignment)}`;
+    };
 
     return (
         <div>
+            {/* Logo */}
+            {logoUrl && (
+                <div className={`px-4 pt-4 ${getAlignmentClass(logoAlignment)}`}>
+                    <img 
+                        src={logoUrl} 
+                        alt="Company Logo" 
+                        className="max-h-16 max-w-[200px] object-contain inline-block"
+                    />
+                </div>
+            )}
+
             {/* Invoice Meta Row: Date & Invoice Number */}
             {(invoiceMeta?.date || invoiceMeta?.invoiceNumber) && (
                 <div className={`flex ${getFlexAlignment(detailsAlignment)} gap-6 px-4 py-2 text-sm text-gray-600`}>
@@ -59,10 +95,10 @@ const HeaderSectionsDisplay = () => {
 
             {/* Bill From / Bill To */}
             {(hasBillFrom || hasBillTo) && (
-                <div className="flex justify-between px-4 py-4 gap-8">
+                <div className={`px-4 py-4 ${getLayoutClasses()}`}>
                     {/* Bill From */}
                     {hasBillFrom && (
-                        <div className={`flex-1 ${getAlignmentClass(billFromAlignment)}`}>
+                        <div className={getBillSectionClasses('from')}>
                             <h3 className="text-xs uppercase text-gray-500 font-semibold mb-2 tracking-wider">From</h3>
                             {invoiceMeta.billFrom.name && (
                                 <p className="font-semibold text-gray-800">{invoiceMeta.billFrom.name}</p>
@@ -78,7 +114,7 @@ const HeaderSectionsDisplay = () => {
                     
                     {/* Bill To */}
                     {hasBillTo && (
-                        <div className={`flex-1 ${getAlignmentClass(billToAlignment)}`}>
+                        <div className={getBillSectionClasses('to')}>
                             <h3 className="text-xs uppercase text-gray-500 font-semibold mb-2 tracking-wider">Bill To</h3>
                             {invoiceMeta.billTo.name && (
                                 <p className="font-semibold text-gray-800">{invoiceMeta.billTo.name}</p>

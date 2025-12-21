@@ -95,19 +95,19 @@ function InvoiceItemEntry() {
     };
 
     return (
-        <div className="bg-white w-full overflow-auto h-full">
+        <div className="w-full overflow-auto h-full">
             
-            <h3 className="text-base font-semibold mb-4 text-gray-700">Add Invoice Item</h3>
+            <h3 className="text-base font-semibold mb-4 text-slate-200">Add Invoice Item</h3>
             <form onSubmit={handleSubmit} className="flex flex-col space-y-3 mb-4">
                 {/* Billing Type Toggle */}
-                <div className="flex rounded-lg overflow-hidden border border-gray-200 bg-gray-50">
+                <div className="flex rounded-lg overflow-hidden border border-slate-600 bg-slate-700">
                     <button
                         type="button"
                         onClick={() => setBillingType('hourly')}
                         className={`flex-1 py-2.5 px-3 text-sm font-medium transition-all duration-200 ${
                             billingType === 'hourly'
                                 ? 'bg-blue-500 text-white shadow-sm'
-                                : 'text-gray-600 hover:bg-gray-100'
+                                : 'text-slate-400 hover:bg-slate-600'
                         }`}
                     >
                         ⏱️ Hourly
@@ -118,7 +118,7 @@ function InvoiceItemEntry() {
                         className={`flex-1 py-2.5 px-3 text-sm font-medium transition-all duration-200 ${
                             billingType === 'fixed'
                                 ? 'bg-blue-500 text-white shadow-sm'
-                                : 'text-gray-600 hover:bg-gray-100'
+                                : 'text-slate-400 hover:bg-slate-600'
                         }`}
                     >
                         📦 Fixed Price
@@ -130,59 +130,59 @@ function InvoiceItemEntry() {
                     value={title}
                     onChange={handleTitleChange}
                     placeholder="Item name"
-                    className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-gray-50 text-sm"
+                    className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                 />
                 <textarea
                     value={description}
                     onChange={handleDescriptionChange}
                     placeholder="Description (optional)"
                     rows="2"
-                    className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-gray-50 text-sm resize-none"
+                    className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm resize-none"
                 />
                 
                 {billingType === 'hourly' ? (
                     <div className="grid grid-cols-2 gap-3">
                         <div className="flex flex-col">
-                            <label className="text-xs text-gray-500 mb-1 font-medium">Hourly Rate ($)</label>
+                            <label className="text-xs text-slate-400 mb-1 font-medium">Hourly Rate ($)</label>
                             <input
                                 type="number"
                                 value={rate}
                                 onChange={handleRateChange}
                                 placeholder="0.00"
-                                className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-gray-50 text-sm"
+                                className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                             />
                         </div>
                         <div className="flex flex-col">
-                            <label className="text-xs text-gray-500 mb-1 font-medium">Hours</label>
+                            <label className="text-xs text-slate-400 mb-1 font-medium">Hours</label>
                             <input
                                 type="number"
                                 value={hours}
                                 onChange={handleHoursChange}
                                 placeholder="0"
-                                className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-gray-50 text-sm"
+                                className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                             />
                         </div>
                     </div>
                 ) : (
                     <div className="grid grid-cols-2 gap-3">
                         <div className="flex flex-col">
-                            <label className="text-xs text-gray-500 mb-1 font-medium">Unit Price ($)</label>
+                            <label className="text-xs text-slate-400 mb-1 font-medium">Unit Price ($)</label>
                             <input
                                 type="number"
                                 value={price}
                                 onChange={handlePriceChange}
                                 placeholder="0.00"
-                                className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-gray-50 text-sm"
+                                className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                             />
                         </div>
                         <div className="flex flex-col">
-                            <label className="text-xs text-gray-500 mb-1 font-medium">Quantity</label>
+                            <label className="text-xs text-slate-400 mb-1 font-medium">Quantity</label>
                             <input
                                 type="number"
                                 value={quantity}
                                 onChange={handleQuantityChange}
                                 placeholder="0"
-                                className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-gray-50 text-sm"
+                                className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                             />
                         </div>
                     </div>
@@ -206,7 +206,7 @@ function InvoiceItemEntry() {
                 {invoiceItems.map((item, index) => {
                     const itemBillingType = getItemBillingType(item);
                     return (
-                        <Accordion key={item.id || index} className="!rounded-lg !shadow-sm border border-gray-100 before:hidden">
+                        <Accordion key={item.id || index} className="!rounded-lg !shadow-sm border border-slate-600/50 before:hidden !bg-slate-700/50">
                             <AccordionSummary
                                 className={`${isEven(index) ? '!bg-blue-600' : '!bg-blue-500'} ${index === 0 && '!rounded-t-lg'} !text-white !min-h-0`}
                                 expandIcon={<ExpandMoreIcon className="text-white" />}
@@ -220,17 +220,17 @@ function InvoiceItemEntry() {
                                     <span className="font-medium">{item.title || 'Untitled Item'}</span>
                                 </div>
                             </AccordionSummary>
-                            <AccordionDetails className="!p-4 bg-gray-50">
+                            <AccordionDetails className="!p-4 !bg-slate-800/50">
                                 <div className="flex flex-col space-y-3">
                                     {/* Billing Type Toggle for Edit */}
-                                    <div className="flex rounded-lg overflow-hidden border border-gray-200 bg-white">
+                                    <div className="flex rounded-lg overflow-hidden border border-slate-600 bg-slate-700">
                                         <button
                                             type="button"
                                             onClick={() => handleBillingTypeChange(index, 'hourly')}
                                             className={`flex-1 py-2 px-3 text-xs font-medium transition-all duration-200 ${
                                                 itemBillingType === 'hourly'
                                                     ? 'bg-blue-500 text-white'
-                                                    : 'text-gray-600 hover:bg-gray-100'
+                                                    : 'text-slate-400 hover:bg-slate-600'
                                             }`}
                                         >
                                             ⏱️ Hourly
@@ -241,7 +241,7 @@ function InvoiceItemEntry() {
                                             className={`flex-1 py-2 px-3 text-xs font-medium transition-all duration-200 ${
                                                 itemBillingType === 'fixed'
                                                     ? 'bg-blue-500 text-white'
-                                                    : 'text-gray-600 hover:bg-gray-100'
+                                                    : 'text-slate-400 hover:bg-slate-600'
                                             }`}
                                         >
                                             📦 Fixed
@@ -253,66 +253,66 @@ function InvoiceItemEntry() {
                                         value={item.title}
                                         onChange={(e) => handleUpdateItem(index, 'title', e.target.value)}
                                         placeholder="Item name"
-                                        className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-white text-sm"
+                                        className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                                     />
                                     <textarea
                                         value={item.description}
                                         onChange={(e) => handleUpdateItem(index, 'description', e.target.value)}
                                         placeholder="Description"
                                         rows="2"
-                                        className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-white text-sm resize-none"
+                                        className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm resize-none"
                                     />
                                     
                                     {itemBillingType === 'hourly' ? (
                                         <div className="grid grid-cols-2 gap-3">
                                             <div className="flex flex-col">
-                                                <label className="text-xs text-gray-500 mb-1 font-medium">Rate ($)</label>
+                                                <label className="text-xs text-slate-400 mb-1 font-medium">Rate ($)</label>
                                                 <input
                                                     type="number"
                                                     value={item.rate || ''}
                                                     onChange={(e) => handleUpdateItem(index, 'rate', e.target.value)}
                                                     placeholder="0.00"
-                                                    className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-white text-sm"
+                                                    className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                                                 />
                                             </div>
                                             <div className="flex flex-col">
-                                                <label className="text-xs text-gray-500 mb-1 font-medium">Hours</label>
+                                                <label className="text-xs text-slate-400 mb-1 font-medium">Hours</label>
                                                 <input
                                                     type="number"
                                                     value={item.hours || ''}
                                                     onChange={(e) => handleUpdateItem(index, 'hours', e.target.value)}
                                                     placeholder="0"
-                                                    className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-white text-sm"
+                                                    className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                                                 />
                                             </div>
                                         </div>
                                     ) : (
                                         <div className="grid grid-cols-2 gap-3">
                                             <div className="flex flex-col">
-                                                <label className="text-xs text-gray-500 mb-1 font-medium">Price ($)</label>
+                                                <label className="text-xs text-slate-400 mb-1 font-medium">Price ($)</label>
                                                 <input
                                                     type="number"
                                                     value={item.price || ''}
                                                     onChange={(e) => handleUpdateItem(index, 'price', e.target.value)}
                                                     placeholder="0.00"
-                                                    className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-white text-sm"
+                                                    className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                                                 />
                                             </div>
                                             <div className="flex flex-col">
-                                                <label className="text-xs text-gray-500 mb-1 font-medium">Qty</label>
+                                                <label className="text-xs text-slate-400 mb-1 font-medium">Qty</label>
                                                 <input
                                                     type="number"
                                                     value={item.quantity || ''}
                                                     onChange={(e) => handleUpdateItem(index, 'quantity', e.target.value)}
                                                     placeholder="0"
-                                                    className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-white text-sm"
+                                                    className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                                                 />
                                             </div>
                                         </div>
                                     )}
                                     
                                     <button 
-                                        className='mt-2 py-2 px-4 text-sm font-medium text-red-600 border border-red-300 rounded-lg hover:bg-red-50 hover:border-red-400 transition-colors duration-200 self-center'
+                                        className='mt-2 py-2 px-4 text-sm font-medium text-red-400 border border-red-500/30 rounded-lg hover:bg-red-500/20 transition-colors duration-200 self-center'
                                         onClick={() => {
                                             if (window.confirm('Are you sure you want to delete this item?')) {
                                                 invoiceItemActions.remove(index);

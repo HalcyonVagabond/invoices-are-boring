@@ -58,14 +58,14 @@ const DiscountInput = () => {
         const base = 'flex-1 py-2.5 px-3 text-sm font-medium transition-all duration-200';
         return buttonType === currentType 
             ? base + ' bg-blue-500 text-white shadow-sm'
-            : base + ' text-gray-600 hover:bg-gray-100';
+            : base + ' text-slate-400 hover:bg-slate-600';
     };
 
     const getAlignmentButtonClass = (optionValue, currentAlignment) => {
         const base = 'flex-1 py-2 px-3 rounded-lg text-xs font-medium transition-all duration-200';
         return optionValue === currentAlignment
             ? base + ' bg-blue-500 text-white shadow-sm'
-            : base + ' bg-gray-100 text-gray-600 hover:bg-gray-200';
+            : base + ' bg-slate-700 text-slate-400 hover:bg-slate-600';
     };
 
     const getAccordionSummaryClass = (index) => {
@@ -76,10 +76,10 @@ const DiscountInput = () => {
     };
 
     return (
-        <div className="bg-white w-full overflow-auto h-full">
-            <h3 className="text-base font-semibold mb-4 text-gray-700">Add Discount</h3>
+        <div className="w-full overflow-auto h-full">
+            <h3 className="text-base font-semibold mb-4 text-slate-200">Add Discount</h3>
             <form onSubmit={handleAddSection} className="flex flex-col space-y-3 mb-4">
-                <div className="flex rounded-lg overflow-hidden border border-gray-200 bg-gray-50">
+                <div className="flex rounded-lg overflow-hidden border border-slate-600 bg-slate-700">
                     <button
                         type="button"
                         onClick={() => setType('percentage')}
@@ -97,11 +97,11 @@ const DiscountInput = () => {
                 </div>
 
                 <div className="flex flex-col">
-                    <label className="text-xs text-gray-500 mb-1 font-medium">Apply to</label>
+                    <label className="text-xs text-slate-400 mb-1 font-medium">Apply to</label>
                     <select
                         value={target}
                         onChange={(e) => setTarget(e.target.value)}
-                        className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-gray-50 text-sm"
+                        className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 text-sm"
                     >
                         <option value="Total">Entire Invoice Total</option>
                         {invoiceItems.map(item => (
@@ -111,7 +111,7 @@ const DiscountInput = () => {
                 </div>
 
                 <div className="flex flex-col">
-                    <label className="text-xs text-gray-500 mb-1 font-medium">
+                    <label className="text-xs text-slate-400 mb-1 font-medium">
                         {type === 'percentage' ? 'Discount %' : 'Discount Amount ($)'}
                     </label>
                     <input
@@ -119,18 +119,18 @@ const DiscountInput = () => {
                         value={value}
                         onChange={(e) => setValue(e.target.value)}
                         placeholder={type === 'percentage' ? '10' : '25.00'}
-                        className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-gray-50 text-sm"
+                        className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                     />
                 </div>
 
                 <div className="flex flex-col">
-                    <label className="text-xs text-gray-500 mb-1 font-medium">Reason (optional)</label>
+                    <label className="text-xs text-slate-400 mb-1 font-medium">Reason (optional)</label>
                     <textarea
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         placeholder="e.g., Loyalty discount"
                         rows="2"
-                        className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-gray-50 text-sm resize-none"
+                        className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm resize-none"
                     />
                 </div>
 
@@ -163,7 +163,7 @@ const DiscountInput = () => {
 
             <div className="space-y-2 mt-4">
                 {discounts.map((discount, index) => (
-                    <Accordion key={discount.id || index} className="!rounded-lg !shadow-sm border border-gray-100 before:hidden">
+                    <Accordion key={discount.id || index} className="!rounded-lg !shadow-sm border border-slate-600/50 before:hidden !bg-slate-700/50">
                         <AccordionSummary
                             className={getAccordionSummaryClass(index)}
                             expandIcon={<ExpandMoreIcon className="text-white" />}
@@ -179,9 +179,9 @@ const DiscountInput = () => {
                                 </span>
                             </div>
                         </AccordionSummary>
-                        <AccordionDetails className="!p-4 bg-gray-50">
+                        <AccordionDetails className="!p-4 !bg-slate-800/50">
                             <div className="flex flex-col space-y-3">
-                                <div className="flex rounded-lg overflow-hidden border border-gray-200 bg-white">
+                                <div className="flex rounded-lg overflow-hidden border border-slate-600 bg-slate-700">
                                     <button
                                         type="button"
                                         onClick={() => handleUpdateSection(index, 'type', 'percentage')}
@@ -199,11 +199,11 @@ const DiscountInput = () => {
                                 </div>
 
                                 <div className="flex flex-col">
-                                    <label className="text-xs text-gray-500 mb-1 font-medium">Apply to</label>
+                                    <label className="text-xs text-slate-400 mb-1 font-medium">Apply to</label>
                                     <select
                                         value={discount.target}
                                         onChange={(e) => handleUpdateSection(index, 'target', e.target.value)}
-                                        className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-white text-sm"
+                                        className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 text-sm"
                                     >
                                         <option value="Total">Entire Invoice Total</option>
                                         {invoiceItems.map(item => (
@@ -213,7 +213,7 @@ const DiscountInput = () => {
                                 </div>
 
                                 <div className="flex flex-col">
-                                    <label className="text-xs text-gray-500 mb-1 font-medium">
+                                    <label className="text-xs text-slate-400 mb-1 font-medium">
                                         {discount.type === 'percentage' ? 'Discount %' : 'Amount ($)'}
                                     </label>
                                     <input
@@ -221,18 +221,18 @@ const DiscountInput = () => {
                                         value={discount.value}
                                         onChange={(e) => handleUpdateSection(index, 'value', e.target.value)}
                                         placeholder={discount.type === 'percentage' ? '10' : '25.00'}
-                                        className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-white text-sm"
+                                        className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 text-sm"
                                     />
                                 </div>
 
                                 <div className="flex flex-col">
-                                    <label className="text-xs text-gray-500 mb-1 font-medium">Reason</label>
+                                    <label className="text-xs text-slate-400 mb-1 font-medium">Reason</label>
                                     <textarea
                                         value={discount.description}
                                         onChange={(e) => handleUpdateSection(index, 'description', e.target.value)}
                                         placeholder="Reason for discount"
                                         rows="2"
-                                        className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-white text-sm resize-none"
+                                        className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm resize-none"
                                     />
                                 </div>
 
@@ -255,7 +255,7 @@ const DiscountInput = () => {
                                             discountActions.remove(index);
                                         }
                                     }}
-                                    className='mt-2 py-2 px-4 text-sm font-medium text-red-600 border border-red-300 rounded-lg hover:bg-red-50 hover:border-red-400 transition-colors duration-200 self-center'
+                                    className='mt-2 py-2 px-4 text-sm font-medium text-red-400 border border-red-500/30 rounded-lg hover:bg-red-500/20 transition-colors duration-200 self-center'
                                 >
                                     Remove Discount
                                 </button>

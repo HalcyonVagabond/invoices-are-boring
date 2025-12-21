@@ -126,6 +126,7 @@ const calculateTotals = (invoiceItems, discounts, taxes = []) => {
           return result;
         });
       },
+    setAll: (items) => setSection(items || []),
 });
   
 export { calculateTotals, modifySectionItem, trackVisit };

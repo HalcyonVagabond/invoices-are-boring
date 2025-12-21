@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useEffect } from 'react';
+import React, { useRef, useContext, useEffect, useState } from 'react';
 import Invoice from './Invoice/Invoice';
 import { ToastContainer } from 'react-toastify';
 import InvoiceInputsMenu from './InvoiceInputs/InvoiceInputsMenu';
@@ -6,10 +6,18 @@ import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import InvoiceContext from '../context/InvoiceContext';
 import { trackVisit } from '../helpers/Helpers';
+import AuthModal from './Auth/AuthModal';
 
 function Body() {
   const invoiceRef = useRef(null);
   const { invoiceTitle, setIsExporting } = useContext(InvoiceContext);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState('login');
+
+  const openAuth = (mode = 'login') => {
+    setAuthMode(mode);
+    setAuthModalOpen(true);
+  };
 
   useEffect(() => {
     trackVisit();
@@ -62,10 +70,12 @@ function Body() {
   };
 
   return (
-    <div>
-        <div className="flex flex-col md:flex-row mt-5 space-x-4 justify-center w-[100vw]">
-          <InvoiceInputsMenu exportPDF={exportPDF} />
-          <Invoice ref={invoiceRef}/>
+    <div className="min-h-[calc(100vh-4rem)] bg-slate-900">
+        <div className="flex flex-col md:flex-row justify-center items-start gap-6 p-4 md:p-8">
+          <InvoiceInputsMenu exportPDF={exportPDF} onOpenAuth={openAuth} />
+          <div className="flex-1 flex justify-center">
+            <Invoice ref={invoiceRef}/>
+          </div>
         </div>
         <ToastContainer
           position="top-right"
@@ -76,6 +86,12 @@ function Body() {
           pauseOnFocusLoss
           draggable
           pauseOnHover
+          theme="dark"
+        />
+        <AuthModal 
+          isOpen={authModalOpen} 
+          onClose={() => setAuthModalOpen(false)} 
+          initialMode={authMode}
         />
       </div>
 

@@ -59,6 +59,12 @@ export const InvoiceProvider = ({ children }) => {
     return localTaxes ? JSON.parse(localTaxes) : [];
   });
 
+  // Logo URL state
+  const [logoUrl, setLogoUrl] = useState(() => {
+    const localLogo = localStorage.getItem('invoiceLogo');
+    return localLogo || null;
+  });
+
   const [isExporting, setIsExporting] = useState(false);
 
   // Initializing Type Modification Methods
@@ -75,12 +81,75 @@ export const InvoiceProvider = ({ children }) => {
     localStorage.setItem('invoiceItems', JSON.stringify(invoiceItems));
     localStorage.setItem('discounts', JSON.stringify(discounts));
     localStorage.setItem('taxes', JSON.stringify(taxes));
+    if (logoUrl) {
+      localStorage.setItem('invoiceLogo', logoUrl);
+    } else {
+      localStorage.removeItem('invoiceLogo');
+    }
 
     // Update totals whenever invoiceItems, discounts, or taxes change
     const newTotals = calculateTotals(invoiceItems, discounts, taxes);
     setTotals(newTotals);
-  }, [invoiceItems, invoiceTitle, invoiceMeta, headerSections, discounts, taxes]);
+  }, [invoiceItems, invoiceTitle, invoiceMeta, headerSections, discounts, taxes, logoUrl]);
 
+
+  // Function to load invoice data (used when loading saved invoices or templates)
+  const loadInvoiceData = (data) => {
+    if (data.invoiceTitle !== undefined) {
+      setInvoiceTitle(typeof data.invoiceTitle === 'object' 
+        ? data.invoiceTitle 
+        : { title: data.invoiceTitle, alignment: 'right' }
+      );
+    }
+    if (data.invoiceMeta !== undefined) {
+      setInvoiceMeta(prev => ({ ...prev, ...data.invoiceMeta }));
+    }
+    if (data.invoiceItems !== undefined) {
+      invoiceItemActions.setAll(data.invoiceItems);
+    }
+    if (data.headerSections !== undefined) {
+      headerSectionActions.setAll(data.headerSections);
+    }
+    if (data.discounts !== undefined) {
+      discountActions.setAll(data.discounts);
+    }
+    if (data.taxes !== undefined) {
+      taxActions.setAll(data.taxes);
+    }
+    if (data.logoUrl !== undefined) {
+      setLogoUrl(data.logoUrl);
+    }
+    // Handle flat data format from saved invoices
+    if (data.fromName !== undefined || data.toName !== undefined) {
+      setInvoiceMeta(prev => ({
+        ...prev,
+        date: data.invoiceDate || prev.date,
+        invoiceNumber: data.invoiceNumber || prev.invoiceNumber,
+        billFrom: {
+          name: data.fromName || '',
+          address: data.fromAddress || '',
+          email: data.fromEmail || ''
+        },
+        billTo: {
+          name: data.toName || '',
+          address: data.toAddress || '',
+          email: data.toEmail || ''
+        }
+      }));
+    }
+  };
+
+  // Function to get all current invoice data (for saving)
+  const getInvoiceData = () => ({
+    invoiceTitle,
+    invoiceMeta,
+    invoiceItems,
+    headerSections,
+    discounts,
+    taxes,
+    totals,
+    logoUrl
+  });
 
   return (
     <InvoiceContext.Provider value={{
@@ -97,8 +166,12 @@ export const InvoiceProvider = ({ children }) => {
       discountActions,
       taxes,
       taxActions,
+      logoUrl,
+      setLogoUrl,
       isExporting,
       setIsExporting,
+      loadInvoiceData,
+      getInvoiceData,
   }}>
       {children}
   </InvoiceContext.Provider>

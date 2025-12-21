@@ -56,31 +56,31 @@ const HeaderInput = () => {
     ];
 
     return (
-        <div className="bg-white w-full overflow-auto h-full space-y-6">
+        <div className="w-full overflow-auto h-full space-y-4">
             
             {/* Invoice Meta: Date & Number */}
-            <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
-                <h4 className="text-sm font-semibold text-blue-800 mb-3 flex items-center gap-2">
+            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/30">
+                <h4 className="text-sm font-semibold text-blue-400 mb-3 flex items-center gap-2">
                     📅 Invoice Details
                 </h4>
                 <div className="grid grid-cols-2 gap-3">
                     <div className="flex flex-col">
-                        <label className="text-xs text-gray-500 mb-1 font-medium">Date</label>
+                        <label className="text-xs text-slate-400 mb-1 font-medium">Date</label>
                         <input
                             type="date"
                             value={invoiceMeta?.date || ''}
                             onChange={(e) => handleMetaChange('date', e.target.value)}
-                            className="px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-white text-sm"
+                            className="px-3 py-2 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 text-sm"
                         />
                     </div>
                     <div className="flex flex-col">
-                        <label className="text-xs text-gray-500 mb-1 font-medium">Invoice #</label>
+                        <label className="text-xs text-slate-400 mb-1 font-medium">Invoice #</label>
                         <input
                             type="text"
                             value={invoiceMeta?.invoiceNumber || ''}
                             onChange={(e) => handleMetaChange('invoiceNumber', e.target.value)}
                             placeholder="INV-001"
-                            className="px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-white text-sm"
+                            className="px-3 py-2 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                         />
                     </div>
                 </div>
@@ -93,7 +93,7 @@ const HeaderInput = () => {
                             className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-medium transition-all duration-200 ${
                                 (invoiceMeta?.detailsAlignment || 'left') === option.value
                                     ? 'bg-blue-500 text-white shadow-sm'
-                                    : 'bg-white text-gray-600 hover:bg-blue-100'
+                                    : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
                             }`}
                         >
                             {option.label}
@@ -102,9 +102,63 @@ const HeaderInput = () => {
                 </div>
             </div>
 
+            {/* Header Layout */}
+            <div className="bg-slate-700/50 rounded-lg p-4 border border-slate-600">
+                <h4 className="text-sm font-semibold text-slate-300 mb-3 flex items-center gap-2">
+                    📐 Header Layout
+                </h4>
+                <div className="grid grid-cols-3 gap-2">
+                    <button
+                        type="button"
+                        onClick={() => handleMetaChange('headerLayout', 'side-by-side')}
+                        className={`py-2 px-2 rounded-lg text-xs font-medium transition-all duration-200 flex flex-col items-center gap-1 ${
+                            (invoiceMeta?.headerLayout || 'side-by-side') === 'side-by-side'
+                                ? 'bg-blue-500 text-white shadow-sm'
+                                : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
+                        }`}
+                    >
+                        <div className="flex gap-1">
+                            <div className="w-3 h-3 border border-current rounded-sm"></div>
+                            <div className="w-3 h-3 border border-current rounded-sm"></div>
+                        </div>
+                        <span>Side by Side</span>
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => handleMetaChange('headerLayout', 'stacked')}
+                        className={`py-2 px-2 rounded-lg text-xs font-medium transition-all duration-200 flex flex-col items-center gap-1 ${
+                            invoiceMeta?.headerLayout === 'stacked'
+                                ? 'bg-blue-500 text-white shadow-sm'
+                                : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
+                        }`}
+                    >
+                        <div className="flex flex-col gap-0.5">
+                            <div className="w-6 h-2 border border-current rounded-sm"></div>
+                            <div className="w-6 h-2 border border-current rounded-sm"></div>
+                        </div>
+                        <span>Stacked</span>
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => handleMetaChange('headerLayout', 'stacked-left')}
+                        className={`py-2 px-2 rounded-lg text-xs font-medium transition-all duration-200 flex flex-col items-center gap-1 ${
+                            invoiceMeta?.headerLayout === 'stacked-left'
+                                ? 'bg-blue-500 text-white shadow-sm'
+                                : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
+                        }`}
+                    >
+                        <div className="flex flex-col gap-0.5 items-start">
+                            <div className="w-4 h-2 border border-current rounded-sm"></div>
+                            <div className="w-4 h-2 border border-current rounded-sm"></div>
+                        </div>
+                        <span>Both Left</span>
+                    </button>
+                </div>
+            </div>
+
             {/* Bill From */}
-            <div className="bg-green-50 rounded-lg p-4 border border-green-100">
-                <h4 className="text-sm font-semibold text-green-800 mb-3 flex items-center gap-2">
+            <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
+                <h4 className="text-sm font-semibold text-green-400 mb-3 flex items-center gap-2">
                     🏢 Bill From (Your Info)
                 </h4>
                 <div className="space-y-2">
@@ -113,21 +167,21 @@ const HeaderInput = () => {
                         value={invoiceMeta?.billFrom?.name || ''}
                         onChange={(e) => handleBillFromChange('name', e.target.value)}
                         placeholder="Your Name / Company"
-                        className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-white text-sm"
+                        className="w-full px-3 py-2 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                     />
                     <textarea
                         value={invoiceMeta?.billFrom?.address || ''}
                         onChange={(e) => handleBillFromChange('address', e.target.value)}
                         placeholder="Address"
                         rows="2"
-                        className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-white text-sm resize-none"
+                        className="w-full px-3 py-2 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm resize-none"
                     />
                     <input
                         type="email"
                         value={invoiceMeta?.billFrom?.email || ''}
                         onChange={(e) => handleBillFromChange('email', e.target.value)}
                         placeholder="Email"
-                        className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-white text-sm"
+                        className="w-full px-3 py-2 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                     />
                 </div>
                 <div className="flex gap-2 mt-3">
@@ -139,7 +193,7 @@ const HeaderInput = () => {
                             className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-medium transition-all duration-200 ${
                                 (invoiceMeta?.billFrom?.alignment || 'left') === option.value
                                     ? 'bg-green-500 text-white shadow-sm'
-                                    : 'bg-white text-gray-600 hover:bg-green-100'
+                                    : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
                             }`}
                         >
                             {option.label}
@@ -149,8 +203,8 @@ const HeaderInput = () => {
             </div>
 
             {/* Bill To */}
-            <div className="bg-purple-50 rounded-lg p-4 border border-purple-100">
-                <h4 className="text-sm font-semibold text-purple-800 mb-3 flex items-center gap-2">
+            <div className="bg-purple-500/10 rounded-lg p-4 border border-purple-500/30">
+                <h4 className="text-sm font-semibold text-purple-400 mb-3 flex items-center gap-2">
                     👤 Bill To (Client Info)
                 </h4>
                 <div className="space-y-2">
@@ -159,21 +213,21 @@ const HeaderInput = () => {
                         value={invoiceMeta?.billTo?.name || ''}
                         onChange={(e) => handleBillToChange('name', e.target.value)}
                         placeholder="Client Name / Company"
-                        className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent bg-white text-sm"
+                        className="w-full px-3 py-2 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                     />
                     <textarea
                         value={invoiceMeta?.billTo?.address || ''}
                         onChange={(e) => handleBillToChange('address', e.target.value)}
                         placeholder="Address"
                         rows="2"
-                        className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent bg-white text-sm resize-none"
+                        className="w-full px-3 py-2 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm resize-none"
                     />
                     <input
                         type="email"
                         value={invoiceMeta?.billTo?.email || ''}
                         onChange={(e) => handleBillToChange('email', e.target.value)}
                         placeholder="Email"
-                        className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent bg-white text-sm"
+                        className="w-full px-3 py-2 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                     />
                 </div>
                 <div className="flex gap-2 mt-3">
@@ -185,7 +239,7 @@ const HeaderInput = () => {
                             className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-medium transition-all duration-200 ${
                                 (invoiceMeta?.billTo?.alignment || 'right') === option.value
                                     ? 'bg-purple-500 text-white shadow-sm'
-                                    : 'bg-white text-gray-600 hover:bg-purple-100'
+                                    : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
                             }`}
                         >
                             {option.label}
@@ -195,8 +249,8 @@ const HeaderInput = () => {
             </div>
 
             {/* Divider */}
-            <div className="border-t border-gray-200 pt-4">
-                <h4 className="text-sm font-medium text-gray-600 mb-3">Additional Header Sections</h4>
+            <div className="border-t border-slate-600 pt-4">
+                <h4 className="text-sm font-medium text-slate-400 mb-3">Additional Header Sections</h4>
             </div>
 
             {/* Custom section form */}
@@ -206,14 +260,14 @@ const HeaderInput = () => {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="Section title"
-                    className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-gray-50 text-sm"
+                    className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                 />
                 <textarea
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                     placeholder="Content"
                     rows="2"
-                    className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-gray-50 text-sm resize-none"
+                    className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm resize-none"
                 />
                 <div className="flex gap-2">
                     {alignmentOptions.map((option) => (
@@ -224,7 +278,7 @@ const HeaderInput = () => {
                             className={'flex-1 py-2 px-3 rounded-lg text-xs font-medium transition-all duration-200 ' + (
                                 alignment === option.value
                                     ? 'bg-blue-500 text-white shadow-sm'
-                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                    : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
                             )}
                         >
                             {option.label}
@@ -248,7 +302,10 @@ const HeaderInput = () => {
             {/* Accordion for editing header sections */}
             <div className="space-y-2 mt-4">
                 {headerSections.map((section, index) => (
-                    <Accordion key={section.id || index} className="!rounded-lg !shadow-sm border border-gray-100 before:hidden">
+                    <Accordion 
+                        key={section.id || index} 
+                        className="!rounded-lg !shadow-sm border border-slate-600/50 before:hidden !bg-slate-700/50"
+                    >
                         <AccordionSummary
                             className={(isEven(index) ? '!bg-blue-600' : '!bg-blue-500') + (index === 0 ? ' !rounded-t-lg' : '') + ' !text-white !min-h-0'}
                             expandIcon={<ExpandMoreIcon className="text-white" />}
@@ -257,21 +314,21 @@ const HeaderInput = () => {
                         >
                             <span className="font-medium">{section.title || 'Untitled Section'}</span>
                         </AccordionSummary>
-                        <AccordionDetails className="!p-4 bg-gray-50">
+                        <AccordionDetails className="!p-4 !bg-slate-800/50">
                             <div className="flex flex-col space-y-3">
                                 <input
                                     type="text"
                                     value={section.title}
                                     onChange={(e) => handleUpdateSection(index, 'title', e.target.value)}
                                     placeholder="Section title"
-                                    className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-white text-sm"
+                                    className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm"
                                 />
                                 <textarea
                                     value={section.content}
                                     onChange={(e) => handleUpdateSection(index, 'content', e.target.value)}
                                     placeholder="Content"
                                     rows="2"
-                                    className="px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-white text-sm resize-none"
+                                    className="px-3 py-2.5 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-slate-700 text-slate-200 placeholder-slate-500 text-sm resize-none"
                                 />
                                 <div className="flex gap-2">
                                     {alignmentOptions.map((option) => (
@@ -282,7 +339,7 @@ const HeaderInput = () => {
                                             className={'flex-1 py-2 px-3 rounded-lg text-xs font-medium transition-all duration-200 ' + (
                                                 section.alignment === option.value
                                                     ? 'bg-blue-500 text-white shadow-sm'
-                                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                                    : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
                                             )}
                                         >
                                             {option.label}
@@ -290,7 +347,7 @@ const HeaderInput = () => {
                                     ))}
                                 </div>
                                 <button 
-                                    className='mt-2 py-2 px-4 text-sm font-medium text-red-600 border border-red-300 rounded-lg hover:bg-red-50 hover:border-red-400 transition-colors duration-200 self-center'
+                                    className='mt-2 py-2 px-4 text-sm font-medium text-red-400 border border-red-500/30 rounded-lg hover:bg-red-500/20 transition-colors duration-200 self-center'
                                     onClick={() => {
                                         if (window.confirm('Are you sure you want to delete this header section?')) {
                                             headerSectionActions.remove(index);

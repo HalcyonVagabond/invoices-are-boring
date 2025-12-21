@@ -1,22 +1,32 @@
 import React from 'react';
-import { InvoiceProvider } from './context/InvoiceContext'; // Import the provider
-import { AuthProvider } from './context/AuthContext'; // Import auth provider
-import NavBar from './components/Navigation/NavBar';
-import Footer from './components/Navigation/Footer';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { InvoiceProvider } from './context/InvoiceContext';
+import { AuthProvider } from './context/AuthContext';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
-import Body from './components/Body';
+
+// Pages
+import LandingPage from './components/LandingPage/LandingPage';
+import EditorPage from './components/EditorPage';
 
 function App() {
   return (
     <AuthProvider>
-      <InvoiceProvider> 
+      <Router>
         <div className="App">
-          <NavBar /> 
-          <Body />
-          <Footer />
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route 
+              path="/editor" 
+              element={
+                <InvoiceProvider>
+                  <EditorPage />
+                </InvoiceProvider>
+              } 
+            />
+          </Routes>
         </div>
-      </InvoiceProvider>
+      </Router>
     </AuthProvider>
   );
 }

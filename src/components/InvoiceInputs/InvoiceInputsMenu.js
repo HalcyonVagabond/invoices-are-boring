@@ -196,7 +196,7 @@ const InvoiceInputsMenu = ({ exportPDF, onOpenAuth }) => {
                             </StyledAccordion>
                             
                             {/* Invoice Items */}
-                            <StyledAccordion title="Invoice Items" icon="📝" defaultExpanded={true}>
+                            <StyledAccordion title="Invoice Items" icon="📝" defaultExpanded={false}>
                                 <LineItemForm />
                             </StyledAccordion>
                             
